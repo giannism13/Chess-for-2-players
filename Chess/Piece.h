@@ -1,10 +1,12 @@
 #pragma once
+#include <math.h>
+
 class Piece {
-private:
+protected:
 	bool isAlive;
 	bool hasMoved;
 	int posX;
 	int posY;
 public:
-	virtual bool isMoveElgbl() = 0;		//ελεγχος εγκυρης κινησης
+	virtual bool checkMove() = 0;		//ελεγχος εγκυρης κινησης
 };
