@@ -11,6 +11,5 @@ protected:
 	int posX;
 	int posY;
 public:
-	virtual void move() = 0;		//ελεγχος εγκυρης κινησης
-	Piece(bool, bool, bool, int, int);	//constructor
+	virtual void move(int, int) = 0;		//ελεγχος εγκυρης κινησης
 };
