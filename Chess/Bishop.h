@@ -2,5 +2,6 @@
 #include "Piece.h"
 
 class Bishop : public Piece {
-	bool checkMove(int, int);
+public:
+	void move(int, int);
 };

@@ -1,7 +1,10 @@
 #include "Bishop.h"
 
-bool Bishop::checkMove(int x, int y) {
-	if (abs(x - posX) == abs(y - posY))
-		return true;
-	return false;
+void Bishop::move(int x, int y) {
+	if (abs(x - posX) == abs(y - posY)) {
+		this->posX = x;
+		this->posX = y;
+	}
+	else
+		cout << "Μη εγκυρη κινηση!" << endl;
 }

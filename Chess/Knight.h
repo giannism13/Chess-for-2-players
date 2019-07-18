@@ -2,5 +2,5 @@
 #include "Piece.h"
 
 class Knight : public Piece {
-	bool checkMove(int, int);
+	void move(int, int);
 };

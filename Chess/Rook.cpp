@@ -1,7 +1,10 @@
 #include "Rook.h"
 
-bool Rook::checkMove(int x, int y) {
-	if (x == posX || y == posY)
-		return true;
-return false;
+void Rook::move(int x, int y) {
+	if (x == posX || y == posY) {
+		this->posX = x;
+		this->posX = y;
+	}
+	else
+		cout << "Μη εγκυρη κινηση!" << endl;
 }

@@ -1,12 +1,16 @@
 #pragma once
 #include <math.h>
+#include <iostream>
+using namespace std;
 
 class Piece {
 protected:
 	bool isAlive;
 	bool hasMoved;
+	bool color;		//true για λευκο
 	int posX;
 	int posY;
 public:
-	virtual bool checkMove() = 0;		//ελεγχος εγκυρης κινησης
+	virtual void move() = 0;		//ελεγχος εγκυρης κινησης
+	Piece(bool, bool, bool, int, int);	//constructor
 };
