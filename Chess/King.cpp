@@ -1,12 +1,10 @@
 #include "King.h"
 
-void King::move(int x, int y) {
-	if (abs(x - posX) <= 1 && abs(y - posX) <= 1) {
-		this->posX = x;
-		this->posX = y;
-	}
+bool King::checkMove(int x, int y) {
+	if (abs(x - posX) <= 1 && abs(y - posX) <= 1)
+		return true;
 	else
-		cout << "Μη εγκυρη κινηση!" << endl;
+		return false;
 }
 
 King::King(bool isAlive, bool hasMoved, bool color, int posX, int posY) {
@@ -15,4 +13,12 @@ King::King(bool isAlive, bool hasMoved, bool color, int posX, int posY) {
 	this->color = color;
 	this->posX = posX;
 	this->posY = posY;
+}
+
+King::King(const King& copy) {
+	this->color = copy.checkMove;
+	this->hasMoved = copy.hasMoved;
+	this->isAlive = copy.isAlive;
+	this->posX = copy.posX;
+	this->posY = copy.posY;
 }

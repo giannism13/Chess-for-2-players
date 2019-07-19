@@ -1,12 +1,10 @@
 #include "Knight.h"
 
-void Knight::move(int x, int y) {
-	if ((abs(x - posX) == 2 && abs(y - posY) == 1) || (abs(x - posX) == 1 && abs(y - posY) == 2)) {
-		this->posX = x;
-		this->posX = y;
-	}
+bool Knight::checkMove(int x, int y) {
+	if ((abs(x - posX) == 2 && abs(y - posY) == 1) || (abs(x - posX) == 1 && abs(y - posY) == 2))
+		return true;
 	else
-		cout << "Μη εγκυρη κινηση!" << endl;
+		return false;
 }
 
 Knight::Knight(bool isAlive, bool hasMoved, bool color, int posX, int posY) {
@@ -15,4 +13,12 @@ Knight::Knight(bool isAlive, bool hasMoved, bool color, int posX, int posY) {
 	this->color = color;
 	this->posX = posX;
 	this->posY = posY;
+}
+
+Knight::Knight(Knight const& copy) {
+	this->color = copy.checkMove;
+	this->hasMoved = copy.hasMoved;
+	this->isAlive = copy.isAlive;
+	this->posX = copy.posX;
+	this->posY = copy.posY;
 }

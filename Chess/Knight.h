@@ -3,6 +3,7 @@
 
 class Knight : public Piece {
 public:
-	void move(int, int);
-	Knight(bool, bool, bool, int, int);
+	bool checkMove(int, int);
+	Knight(bool, bool, bool, int, int);		//general constructor
+	Knight(Knight const&);		//copy constructor
 };

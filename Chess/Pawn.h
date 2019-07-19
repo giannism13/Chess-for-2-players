@@ -2,6 +2,7 @@
 #include "Piece.h"
 class Pawn : public Piece {
 public:
-	void move(int, int);
-	Pawn(bool, bool, bool, int, int);
+	bool checkMove(int, int);
+	Pawn(bool, bool, bool, int, int);	//general constructor
+	Pawn(const Pawn&);	//copy constructor
 };

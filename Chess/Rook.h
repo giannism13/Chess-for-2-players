@@ -2,6 +2,7 @@
 #include "Piece.h"
 class Rook : public Piece {
 public:
-	void move(int x, int y);
-	Rook(bool, bool, bool, int, int);
+	bool checkMove(int x, int y);
+	Rook(bool, bool, bool, int, int);	//general constructor
+	Rook(const Rook&);	//copy constructor
 };

@@ -11,5 +11,6 @@ class Chessboard {
 private:
 	Piece* board[8][8];		//πινακας σκακιερας
 public:
-	Chessboard();	//default constructor
+	Chessboard();	//default constructor για νεο παιχνιδι
+	void move(int ,int);
 };

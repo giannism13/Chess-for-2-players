@@ -11,5 +11,5 @@ protected:
 	int posX;
 	int posY;
 public:
-	virtual void move(int, int) = 0;		//ελεγχος εγκυρης κινησης
+	virtual bool checkMove(int, int) = 0;		//ελεγχος εγκυρης κινησης
 };

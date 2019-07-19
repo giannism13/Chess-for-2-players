@@ -32,4 +32,16 @@ Chessboard::Chessboard() {
 
 	for (int i = 0; i < 8; i++)
 		this->board[6][i] = new Pawn(true, false, false, 0, i);
+
+	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
+		for (int j = 0; j < 7; j++)
+			this->board[i][j] = NULL;
+}
+
+void Chessboard::move(int x, int y) {
+	if (this->board[y][x]->checkMove(x, y)) {
+		//stuff
+	}
+	else
+		cout << "Μη εγκυρη κινηση!" << endl;
 }
