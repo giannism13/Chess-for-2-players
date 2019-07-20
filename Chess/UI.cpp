@@ -1,6 +1,6 @@
-#include "displayMenu.h"
+#include "UI.h"
 
-int displayMenu() {
+int UI::displayMenu() {
 	system("cls");
 
 	int sel;

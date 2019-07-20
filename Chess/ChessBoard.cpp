@@ -40,7 +40,7 @@ Chessboard::Chessboard() {
 
 void Chessboard::move(int x, int y) {
 	if (this->board[y][x]->checkMove(x, y)) {
-		//stuff
+		//this->board[y][x] = this->board[this->board]
 	}
 	else
 		cout << "Μη εγκυρη κινηση!" << endl;
