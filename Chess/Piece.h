@@ -5,24 +5,22 @@ using namespace std;
 
 class Piece {
 protected:
-	bool isAlive;
 	bool hasMoved;
-	bool color;		//true για λευκο
+	char letter;
 	int posX;
 	int posY;
+
 public:
 	virtual bool checkMove(int, int) = 0;		//ελεγχος εγκυρης κινησης
 	
 	//accessor functions
-	void setIsAlive(bool);
 	void setHasMoved(bool);
-	void setColor(bool);
 	void setPosX(int);
 	void setPosY(int);
+	void setletter(char);
 
-	bool getIsAlive();
 	bool getHasMoved();
-	bool getColor();
 	int getPosX();
 	int getPosY();
+	char getLetter();
 };

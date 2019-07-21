@@ -13,3 +13,8 @@ int UI::displayMenu() {
 	cin >> sel;
 	return sel;
 }
+
+void UI::newGame() {
+	Chessboard board;
+	//εμφανιση σκακιερας 
+}

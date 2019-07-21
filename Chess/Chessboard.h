@@ -12,5 +12,6 @@ private:
 	Piece* board[8][8];		//πινακας σκακιερας
 public:
 	Chessboard();	//default constructor για νεο παιχνιδι
-	void move(int ,int);
+	void move(int ,int);	//μετακινει τα κομματια στη σκακιερα
+	void showBoard();	//εμφανιζει την τρεχουσα κατασταση της σκακιερας
 };

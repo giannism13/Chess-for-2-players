@@ -4,8 +4,11 @@
 //να ειναι χρησιμοποιησιμα απο τις αλλες κλασεις.
 
 #include <iostream>
+#include "Chessboard.h"
 using namespace std;
 
 class UI {
-	int displayMenu();	//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
+public:
+	static int displayMenu();	//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
+	static void newGame();	//Ξεκιναει νεο παιχνιδι
 };

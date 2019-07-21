@@ -1,10 +1,10 @@
 #include "Chessboard.h"
-#include "displayMenu.h"
+#include "UI.h"
 
 void main() {
 	system("chcp 1253");
 	while (true) {
-		switch (displayMenu()) {
+		switch (UI::displayMenu()) {
 		case 1:
 			//Chessboard board;
 			//TODO stuff

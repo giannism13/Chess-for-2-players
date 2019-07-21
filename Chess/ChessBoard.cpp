@@ -45,3 +45,35 @@ void Chessboard::move(int x, int y) {
 	else
 		cout << "Μη εγκυρη κινηση!" << endl;
 }
+
+void Chessboard::showBoard() {
+	//τυπωση πρωτης γραμμης
+	cout << (char) 218;	//Γ
+	for (int i = 0; i < 16; i++) {
+		if (i % 2 == 0)
+			cout << (char) 196;	//-
+		else
+			cout << (char) 194;	//T
+		
+		cout << (char) 191 << endl;
+  	}
+
+	for (int i = 0; i < 14; i++)
+		for (int j = 0; j < 16; j++)
+			if (i % 2 != 0)
+				if (j == 0)
+					cout << ( char) 195;
+				else if (j == 16)
+					cout << ( char) 180;
+				else if (j % 2 == 0)
+					cout << ( char) 196;	//-
+				else
+					cout << ( char) 197;	//+
+			else
+				if (j % 2 == 0)
+					cout << ( char) 179;	//|
+				else {
+
+				}
+		
+}
