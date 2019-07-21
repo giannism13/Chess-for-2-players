@@ -7,18 +7,16 @@ bool Bishop::checkMove(int x, int y) {
 		return false;
 }
 
-Bishop::Bishop(bool isAlive, bool hasMoved, bool color, int posX, int posY) {
-	this->isAlive = isAlive;
+Bishop::Bishop(bool hasMoved, char letter, int posX, int posY) {
 	this->hasMoved = hasMoved;
-	this->color = color;
 	this->posX = posX;
 	this->posY = posY;
+	this->letter = letter;
 }
 
 Bishop::Bishop(const Bishop& copy) {
-	this->color = copy.checkMove;
 	this->hasMoved = copy.hasMoved;
-	this->isAlive = copy.isAlive;
 	this->posX = copy.posX;
 	this->posY = copy.posY;
+	this->letter = copy.letter;
 }

@@ -2,36 +2,36 @@
 
 Chessboard::Chessboard() {
 	//λευκα
-	this->board[0][0] = new Rook(true, false, true, 0, 0);
-	this->board[0][7] = new Rook(true, false, true, 0, 7);
+	this->board[0][0] = new Rook(true, 'R', 0, 0);
+	this->board[7][0] = new Rook(true, 'R', 7, 0);
 
-	this->board[0][1] = new Knight(true, false, true, 0, 1);
-	this->board[0][6] = new Knight(true, false, true, 0, 6);
+	this->board[1][0] = new Knight(true, 'N', 1, 0);
+	this->board[6][0] = new Knight(true, 'N', 6, 0);
 
-	this->board[0][2] = new Bishop(true, false, true, 0, 2);
-	this->board[0][2] = new Bishop(true, false, true, 0, 5);
+	this->board[2][0] = new Bishop(true, 'B', 2, 0);
+	this->board[5][0] = new Bishop(true, 'B', 5, 0);
 
-	this->board[0][3] = new Queen(true, false, true, 0, 3);
-	this->board[0][4] = new King(true, false, true, 0, 4);
+	this->board[3][0] = new Queen(true, 'Q', 3, 0);
+	this->board[4][0] = new King(true, 'K', 4, 0);
 	
 	for (int i = 0; i < 8; i++)
-		this->board[1][i] = new Pawn(true, false, true, 0, i);
+		this->board[i][1] = new Pawn(true, ' ', i, 1);
 
 	//μαυρα
-	this->board[0][0] = new Rook(true, false, false, 7, 0);
-	this->board[0][7] = new Rook(true, false, false, 7, 7);
+	this->board[0][7] = new Rook(true,'r', 0, 7);
+	this->board[7][7] = new Rook(true, 'r', 7, 7);
 
-	this->board[0][1] = new Knight(true, false, false, 7, 1);
-	this->board[0][6] = new Knight(true, false, false, 7, 6);
+	this->board[1][7] = new Knight(true, 'n', 1, 7);
+	this->board[6][7] = new Knight(true, 'n', 6, 7);
 
-	this->board[0][2] = new Bishop(true, false, false, 7, 2);
-	this->board[0][2] = new Bishop(true, false, false, 7, 5);
+	this->board[2][7] = new Bishop(true, 'b', 2, 7);
+	this->board[5][7] = new Bishop(true, 'b', 5, 7);
 
-	this->board[0][3] = new Queen(true, false, false, 7, 3);
-	this->board[0][4] = new King(true, false, false, 7, 4);
+	this->board[3][7] = new Queen(true, 'q', 3, 7);
+	this->board[4][7] = new King(true, 'k', 4, 7);
 
 	for (int i = 0; i < 8; i++)
-		this->board[6][i] = new Pawn(true, false, false, 0, i);
+		this->board[i][6] = new Pawn(true, ' ', i, 6);
 
 	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
 		for (int j = 0; j < 7; j++)
