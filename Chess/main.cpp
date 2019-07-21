@@ -1,10 +1,10 @@
 #include "Chessboard.h"
 #include "UI.h"
 
-void main() {
-	//system("chcp 65001");
-	Chessboard b;
-	b.showBoard();
+int main() {
+	system("chcp 1253");
+	//Chessboard b;
+	//b.showBoard();
 	while (true) {
 		switch (UI::displayMenu()) {
 		case 1:
@@ -21,4 +21,5 @@ void main() {
 			break;
 		}
 	}
+	return 0;
 }

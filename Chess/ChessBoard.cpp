@@ -47,7 +47,8 @@ void Chessboard::move(int x, int y) {
 }
 
 void Chessboard::showBoard() {
-	//τυπωση πρωτης γραμμης
+	system("chcp 65001");	//για την υποστηριξη unicode χαρακτηρων
+	//τυπωση οριου πρωτης γραμμης
 	cout << ( char) 218;	//Γ
 	for (int i = 0; i < 16; i++) {
 		if (i % 2 == 0)
@@ -57,9 +58,9 @@ void Chessboard::showBoard() {
 
 		cout << ( char) 191 << endl;
 	}
-
+	//τυπωση σκακιερας
 	for (int i = 0; i < 14; i++)
-		for (int j = 0; j < 16; j++)
+		for (int j = 0; j < 16; j++) {
 			if (i % 2 != 0)
 				if (j == 0)
 					cout << ( char) 195;
@@ -97,4 +98,19 @@ void Chessboard::showBoard() {
 						wcout << " \u2659";
 					else if (this->board[i / 2][j / 2]->getLetter() == 'p')
 						wcout << " \u265F";
+
+			cout << endl;
+		}
+
+	//τυπωση κατω οριου τελευταιας γραμμης
+	cout << ( char) 192;	//L
+	for (int i=0; i<16; i++)
+		if (i % 2 == 0)
+			cout << ( char) 196;	//-
+		else
+			cout << ( char) 193;
+
+	cout << ( char) 217 << endl;
+
+	cout << " A B C D E F G H" << endl;
 }						
