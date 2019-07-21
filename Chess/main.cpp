@@ -2,7 +2,9 @@
 #include "UI.h"
 
 void main() {
-	system("chcp 1253");
+	//system("chcp 65001");
+	Chessboard b;
+	b.showBoard();
 	while (true) {
 		switch (UI::displayMenu()) {
 		case 1:

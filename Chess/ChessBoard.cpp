@@ -15,7 +15,7 @@ Chessboard::Chessboard() {
 	this->board[4][0] = new King(true, 'K', 4, 0);
 	
 	for (int i = 0; i < 8; i++)
-		this->board[i][1] = new Pawn(true, ' ', i, 1);
+		this->board[i][1] = new Pawn(true, 'P', i, 1);
 
 	//μαυρα
 	this->board[0][7] = new Rook(true,'r', 0, 7);
@@ -31,7 +31,7 @@ Chessboard::Chessboard() {
 	this->board[4][7] = new King(true, 'k', 4, 7);
 
 	for (int i = 0; i < 8; i++)
-		this->board[i][6] = new Pawn(true, ' ', i, 6);
+		this->board[i][6] = new Pawn(true, 'p', i, 6);
 
 	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
 		for (int j = 0; j < 7; j++)
@@ -48,15 +48,15 @@ void Chessboard::move(int x, int y) {
 
 void Chessboard::showBoard() {
 	//τυπωση πρωτης γραμμης
-	cout << (char) 218;	//Γ
+	cout << ( char) 218;	//Γ
 	for (int i = 0; i < 16; i++) {
 		if (i % 2 == 0)
-			cout << (char) 196;	//-
+			cout << ( char) 196;	//-
 		else
-			cout << (char) 194;	//T
-		
-		cout << (char) 191 << endl;
-  	}
+			cout << ( char) 194;	//T
+
+		cout << ( char) 191 << endl;
+	}
 
 	for (int i = 0; i < 14; i++)
 		for (int j = 0; j < 16; j++)
@@ -72,8 +72,29 @@ void Chessboard::showBoard() {
 			else
 				if (j % 2 == 0)
 					cout << ( char) 179;	//|
-				else {
-
-				}
-		
-}
+				else
+					if (this->board[i / 2][j / 2]->getLetter() == 'R')
+						wcout << " \u2656";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'r')
+						wcout << " \u265C";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'N')
+						wcout << " \u2658";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'n')
+						wcout << " \u265E";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'B')
+						wcout << " \u2657";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'b')
+						wcout << " \u265D";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'Q')
+						wcout << " \u2655";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'q')
+						wcout << " \u265B";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'K')
+						wcout << " \u2654";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'k')
+						wcout << " \u265A";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'P')
+						wcout << " \u2659";
+					else if (this->board[i / 2][j / 2]->getLetter() == 'p')
+						wcout << " \u265F";
+}						
