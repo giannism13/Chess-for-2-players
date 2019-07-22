@@ -13,4 +13,5 @@ public:
 	static int displayMenu();	//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
 	static void newGame();		//Ξεκιναει νεο παιχνιδι
 	static void play(Chessboard*);	//Κυρια λειτουργια παιχνιδιου
+	static void translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
 };

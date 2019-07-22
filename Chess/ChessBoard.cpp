@@ -49,10 +49,8 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 			return true;
 		}
 	}
-	else {
-		cout << "Μη εγκυρη κινηση!" << endl;
+	else
 		return false;
-	}
 }
 
 void Chessboard::showBoard() {
