@@ -16,5 +16,5 @@ int UI::displayMenu() {
 
 void UI::newGame() {
 	Chessboard board;
-	//εμφανιση σκακιερας 
+	board.showBoard();
 }

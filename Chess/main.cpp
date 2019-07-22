@@ -8,8 +8,7 @@ int main() {
 	while (true) {
 		switch (UI::displayMenu()) {
 		case 1:
-			//Chessboard board;
-			//TODO stuff
+			UI::newGame();
 			break;
 		case 2:
 			//TODO File input

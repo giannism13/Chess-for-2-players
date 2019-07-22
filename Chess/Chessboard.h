@@ -6,6 +6,7 @@
 #include "King.h"
 #include "Queen.h"
 #include "Pawn.h"
+#include <math.h>
 
 class Chessboard {
 private:
@@ -14,4 +15,5 @@ public:
 	Chessboard();	//default constructor για νεο παιχνιδι
 	void move(int ,int);	//μετακινει τα κομματια στη σκακιερα
 	void showBoard();	//εμφανιζει την τρεχουσα κατασταση της σκακιερας
+	bool pathCheck(int, int, Piece*);	//Ελεγχει εαν η διαδρομη ενος κοματιου (πλην ιππου) ειναι ελευθερη
 };

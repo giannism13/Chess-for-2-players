@@ -73,34 +73,15 @@ void Chessboard::showBoard() {
 			else
 				if (j % 2 == 0)
 					cout << ( char) 179;	//|
+				else if (this->board[i / 2][j / 2] == NULL)
+					cout << "  ";
 				else
-					if (this->board[i / 2][j / 2]->getLetter() == 'R')
-						wcout << " \u2656";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'r')
-						wcout << " \u265C";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'N')
-						wcout << " \u2658";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'n')
-						wcout << " \u265E";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'B')
-						wcout << " \u2657";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'b')
-						wcout << " \u265D";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'Q')
-						wcout << " \u2655";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'q')
-						wcout << " \u265B";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'K')
-						wcout << " \u2654";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'k')
-						wcout << " \u265A";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'P')
-						wcout << " \u2659";
-					else if (this->board[i / 2][j / 2]->getLetter() == 'p')
-						wcout << " \u265F";
+					cout << this->board[i / 2][j / 2]->getLetter() << " ";
 
 			cout << endl;
 		}
+
+	system("chcp 1253");
 
 	//τυπωση κατω οριου τελευταιας γραμμης
 	cout << ( char) 192;	//L
@@ -113,4 +94,53 @@ void Chessboard::showBoard() {
 	cout << ( char) 217 << endl;
 
 	cout << " A B C D E F G H" << endl;
-}						
+}
+
+bool Chessboard::pathCheck(int x , int y, Piece* p) {
+	if (p->getPosX() == x) {	//κινειται καθετα
+		if (p->getPosY() < y) {	//προς τα πανω
+			for (int j = p->getPosY(); j < x; j++)
+				if (this->board[x][j] != NULL)	//ελεγχος αν ενα ενδιαμεσο τετραγωνο δεν ειναι κενο
+					return false;
+		}
+		else {	//προς τα κατω
+			for (int j = p->getPosY(); j < x; j--)
+				if (this->board[x][j] != NULL)
+					return false;
+		}
+	}
+	else if (p->getPosY == y) {	//κινειται οριζοντια
+		if (p->getPosX() < x) {	//προς τα δεξια
+			for (int i = p->getPosX(); i < x; i++)
+				if (this->board[i][y] != NULL)
+					return false;
+		}
+		else {	//προς τα αριστερα
+			for (int i = p->getPosX(); i < x; i--)
+				if (this->board[i][y] != NULL)
+					return false;
+		}
+	}
+	else {	//διαγωνια κινηση
+		if (p->getPosX() < x && p->getPosY() < y) {	//πανω δεξια
+			for (int i = 1; i < abs(x - p->getPosX()); i++)
+				if (this->board[p->getPosX() + i][p->getPosY() + i] != NULL)
+					return false;
+		}
+		else if (p->getPosX() > x && p->getPosY() < y) {	//πανω αριστερα
+			for (int i = 1; i < abs(x - p->getPosX()); i++)
+				if (this->board[p->getPosX() + i][p->getPosY() + i] != NULL)
+					return false;
+		}
+		else if (p->getPosX() < x && p->getPosY() > y) {	//κατω δεξια
+			for (int i = 1; i < abs(x - p->getPosX()); i++)
+				if (this->board[p->getPosX() + i][p->getPosY() + i] != NULL)
+					return false;
+		}
+		else {	//κατω αριστερα
+			for (int i = 1; i < abs(x - p->getPosX()); i++)
+				if (this->board[p->getPosX() + i][p->getPosY() + i] != NULL)
+					return false;
+		}
+	}
+}
