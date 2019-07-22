@@ -7,13 +7,14 @@
 #include "Queen.h"
 #include "Pawn.h"
 #include <math.h>
+#include <cctype>
 
 class Chessboard {
 private:
 	Piece* board[8][8];		//πινακας σκακιερας
 public:
 	Chessboard();	//default constructor για νεο παιχνιδι
-	void move(int ,int);	//μετακινει τα κομματια στη σκακιερα
+	bool move(int ,int, int, int);	//μετακινει τα κομματια στη σκακιερα
 	void showBoard();	//εμφανιζει την τρεχουσα κατασταση της σκακιερας
 	bool pathCheck(int, int, Piece*);	//Ελεγχει εαν η διαδρομη ενος κοματιου (πλην ιππου) ειναι ελευθερη
 };

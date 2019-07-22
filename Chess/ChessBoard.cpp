@@ -1,4 +1,5 @@
 #include "Chessboard.h"
+using namespace std;
 
 Chessboard::Chessboard() {
 	//λευκα
@@ -38,12 +39,20 @@ Chessboard::Chessboard() {
 			this->board[i][j] = NULL;
 }
 
-void Chessboard::move(int x, int y) {
-	if (this->board[y][x]->checkMove(x, y)) {
-		//this->board[y][x] = this->board[this->board]
+bool Chessboard::move(int x, int y, int finX, int finY) {
+	if (this->board[x][y]->checkMove(finX, finY) && this->pathCheck(finX, finY, this->board[x][y])) {
+		//ελεγχος εαν το τετραγωνο προορισμου ειναι κενο ή περιεχει αντιπαλα κοματια
+		if (isupper(!(this->board[finX][finY]->getLetter()) == isupper(this->board[x][y]->getLetter())) || this->board[finX][finY] == NULL) {
+			this->board[finX][finY] = this->board[x][y];
+			this->board[x][y] = NULL;
+			this->board[finX][finY]->setHasMoved(true);
+			return true;
+		}
 	}
-	else
+	else {
 		cout << "Μη εγκυρη κινηση!" << endl;
+		return false;
+	}
 }
 
 void Chessboard::showBoard() {

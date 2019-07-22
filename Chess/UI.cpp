@@ -15,6 +15,22 @@ int UI::displayMenu() {
 }
 
 void UI::newGame() {
-	Chessboard board;
-	board.showBoard();
+	Chessboard* b = new Chessboard;
+	UI::play(b);
+}
+
+void UI::play(Chessboard* b) {
+	string move;
+	while (true) {
+		b->showBoard();
+		cout << endl << "Κινηση Λευκου: ";
+		getline(cin, move);
+		//checks
+
+
+		b->showBoard();
+		cout << endl << "Κινηση Μαυρου: ";
+		getline(cin, move);
+		//checks
+	}
 }
