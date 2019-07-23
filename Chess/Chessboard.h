@@ -12,9 +12,11 @@
 class Chessboard {
 private:
 	Piece* board[8][8];		//πινακας σκακιερας
+	bool whiteTurn;			//Ποιος παιζει;
 public:
-	Chessboard();	//default constructor για νεο παιχνιδι
-	bool move(int ,int, int, int);	//μετακινει τα κομματια στη σκακιερα
-	void showBoard();	//εμφανιζει την τρεχουσα κατασταση της σκακιερας
+	Chessboard();						//default constructor για νεο παιχνιδι
+	bool move(int ,int, int, int);		//μετακινει τα κομματια στη σκακιερα
+	void showBoard();					//εμφανιζει την τρεχουσα κατασταση της σκακιερας
 	bool pathCheck(int, int, Piece*);	//Ελεγχει εαν η διαδρομη ενος κοματιου (πλην ιππου) ειναι ελευθερη
+	bool kingChecked();					//Ελεγχει εαν ο βασιλιας ειναι σε σαχ
 };
