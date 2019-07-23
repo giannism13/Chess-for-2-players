@@ -15,12 +15,12 @@ Chessboard::Chessboard() {
 
 	this->board[3][0] = new Queen(true, 'Q', 3, 0);
 	this->board[4][0] = new King(true, 'K', 4, 0);
-	
+
 	for (int i = 0; i < 8; i++)
 		this->board[i][1] = new Pawn(true, 'P', i, 1);
 
 	//μαυρα
-	this->board[0][7] = new Rook(true,'r', 0, 7);
+	this->board[0][7] = new Rook(true, 'r', 0, 7);
 	this->board[7][7] = new Rook(true, 'r', 7, 7);
 
 	this->board[1][7] = new Knight(true, 'n', 1, 7);
@@ -93,7 +93,7 @@ void Chessboard::showBoard() {
 
 	//τυπωση κατω οριου τελευταιας γραμμης
 	cout << ( char) 192;	//L
-	for (int i=0; i<16; i++)
+	for (int i = 0; i < 16; i++)
 		if (i % 2 == 0)
 			cout << ( char) 196;	//-
 		else
@@ -104,7 +104,7 @@ void Chessboard::showBoard() {
 	cout << " A B C D E F G H" << endl;
 }
 
-bool Chessboard::pathCheck(int x , int y, Piece* p) {
+bool Chessboard::pathCheck(int x, int y, Piece* p) {
 	if (p->getPosX() == x) {	//κινειται καθετα
 		if (p->getPosY() < y) {	//προς τα πανω
 			for (int j = p->getPosY(); j < x; j++)
@@ -156,7 +156,7 @@ bool Chessboard::pathCheck(int x , int y, Piece* p) {
 bool Chessboard::kingChecked() {
 	int kx, ky;
 	for (int i = 0; i < 7; i++)				//Ευρεση βασιλια
-		for (int j =0; j < 7; j++)
+		for (int j = 0; j < 7; j++)
 			if (this->board[i][j]->getLetter() == 'K' && this->whiteTurn) {
 				kx = i;
 				ky = j;
@@ -185,4 +185,129 @@ bool Chessboard::kingChecked() {
 			}
 
 	return false;
+}
+
+bool Chessboard::castle(bool kingside) {
+	if (kingside) {		//Μικρο ροκε
+		if (whiteTurn) {
+			//Ελεγχος εαν ο βασιλιας και ο πυργος βρισκονται στις αρχικες τους θεσεις και δεν εχουν κουνηθει
+			if (this->board[7][0] != NULL && this->board[7][0]->getLetter() == 'R' && !this->board[7][0]->getHasMoved() &&
+				this->board[4][0] != NULL && this->board[4][0]->getLetter() == 'K' && !this->board[4][0]->getHasMoved() &&
+				!this->kingChecked()) {			//Ο βασιλιας δεν ειναι σε σαχ
+				if (this->board[5][0] != NULL || this->board[6][0] != NULL)	//Ελεγχος εαν τα ενδιαμεσα τετραγωνα ειναι ελευθερα
+					return false;
+				//Ελεγχος εαν τα ενδιαμεσα τετραγωνα απειλουνται
+				for (int i = 0; i < 7; i++)
+					for (int j = 0; j < 7; j++)
+						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
+							if (this->board[i][j]->getLetter() == 'N' && (this->board[i][j]->checkMove(6, 0) ||
+								this->board[i][j]->checkMove(5, 0)))
+								return false;
+							else if (this->board[i][j]->checkMove(6, 0) && this->pathCheck(6, 0, this->board[i][j]))
+								return false;
+						}
+			}
+			else {
+				//Μετακινηση βασιλια
+				this->board[4][0]->setPosX(6);
+				this->board[6][0] = this->board[4][0];
+				this->board[6][0]->setHasMoved(true);
+				this->board[4][0] = NULL;
+
+				//Μετακινηση πυργου
+				this->board[7][0]->setPosX(7);
+				this->board[5][0] = this->board[7][0];
+				this->board[5][0]->setHasMoved(true);
+				this->board[7][0] = NULL;
+			}
+		}
+		else
+			if (this->board[7][7] != NULL && this->board[7][7]->getLetter() == 'r' && !this->board[7][7]->getHasMoved() &&
+				this->board[4][7] != NULL && this->board[4][7]->getLetter() == 'k' && !this->board[4][7]->getHasMoved() &&
+				!this->kingChecked()) {
+				if (this->board[5][7] != NULL || this->board[6][7] != NULL)
+					return false;
+				for (int i = 0; i < 7; i++)
+					for (int j = 0; j < 7; j++)
+						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
+							if (this->board[i][j]->getLetter() == 'n' && (this->board[i][j]->checkMove(6, 7) ||
+								this->board[i][j]->checkMove(5, 7)))
+								return false;
+							else if (this->board[i][j]->checkMove(6, 7) && this->pathCheck(6, 7, this->board[i][j]))
+								return false;
+						}
+			}
+			else {
+				this->board[4][7]->setPosX(6);
+				this->board[6][7] = this->board[4][7];
+				this->board[6][7]->setHasMoved(true);
+				this->board[4][7] = NULL;
+
+				this->board[7][7]->setPosX(7);
+				this->board[5][7] = this->board[7][7];
+				this->board[5][7]->setHasMoved(true);
+				this->board[7][7] = NULL;
+			}
+	}
+	else {	//Μεγαλο ροκε
+		if (whiteTurn) {
+			//Ελεγχος εαν ο βασιλιας και ο πυργος βρισκονται στις αρχικες τους θεσεις και δεν εχουν κουνηθει
+			if (this->board[0][0] != NULL && this->board[0][0]->getLetter() == 'R' && !this->board[0][0]->getHasMoved() &&
+				this->board[4][0] != NULL && this->board[4][0]->getLetter() == 'K' && !this->board[4][0]->getHasMoved() &&
+				!this->kingChecked()) {			//Ο βασιλιας δεν ειναι σε σαχ
+				if (this->board[1][0] != NULL || this->board[2][0] != NULL || this->board[3][0] != NULL)	//Ελεγχος εαν τα ενδιαμεσα τετραγωνα ειναι ελευθερα
+					return false;
+				//Ελεγχος εαν τα ενδιαμεσα τετραγωνα απειλουνται
+				for (int i = 0; i < 7; i++)
+					for (int j = 0; j < 7; j++)
+						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
+							if (this->board[i][j]->getLetter() == 'N' && (this->board[i][j]->checkMove(1, 0) ||
+								this->board[i][j]->checkMove(2, 0) || this->board[i][j]->checkMove(3, 0)))
+								return false;
+							else if (this->board[i][j]->checkMove(6, 0) && this->pathCheck(6, 0, this->board[i][j]))
+								return false;
+						}
+			}
+			else {
+				//Μετακινηση βασιλια
+				this->board[4][0]->setPosX(2);
+				this->board[2][0] = this->board[4][0];
+				this->board[2][0]->setHasMoved(true);
+				this->board[4][0] = NULL;
+
+				//Μετακινηση πυργου
+				this->board[0][0]->setPosX(3);
+				this->board[3][0] = this->board[0][0];
+				this->board[3][0]->setHasMoved(true);
+				this->board[0][0] = NULL;
+			}
+		}
+		else
+			if (this->board[0][7] != NULL && this->board[0][7]->getLetter() == 'r' && !this->board[0][7]->getHasMoved() &&
+				this->board[4][7] != NULL && this->board[4][7]->getLetter() == 'k' && !this->board[4][7]->getHasMoved() &&
+				!this->kingChecked()) {
+				if (this->board[1][7] != NULL || this->board[2][7] != NULL || this->board[3][0] != NULL)
+					return false;
+				for (int i = 0; i < 7; i++)
+					for (int j = 0; j < 7; j++)
+						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
+							if (this->board[i][j]->getLetter() == 'n' && (this->board[i][j]->checkMove(1, 7) ||
+								this->board[i][j]->checkMove(2, 7) || this->board[i][j]->checkMove(3, 7)))
+								return false;
+							else if (this->board[i][j]->checkMove(6, 7) && this->pathCheck(6, 7, this->board[i][j]))
+								return false;
+						}
+			}
+			else {
+				this->board[4][7]->setPosX(2);
+				this->board[2][7] = this->board[4][7];
+				this->board[2][7]->setHasMoved(true);
+				this->board[4][7] = NULL;
+
+				this->board[0][7]->setPosX(3);
+				this->board[3][7] = this->board[7][7];
+				this->board[3][7]->setHasMoved(true);
+				this->board[0][7] = NULL;
+			}
+	}
 }
