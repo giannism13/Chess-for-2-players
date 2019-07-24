@@ -3,36 +3,36 @@
 Chessboard::Chessboard() {
 	this->whiteTurn = true;	//πρωτα παιζει ο λευκος
 	//λευκα
-	this->board[0][0] = new Rook(true, 'R', 0, 0);
-	this->board[7][0] = new Rook(true, 'R', 7, 0);
+	this->board[0][0] = new Rook(false, 'R', 0, 0);
+	this->board[7][0] = new Rook(false, 'R', 7, 0);
 
-	this->board[1][0] = new Knight(true, 'N', 1, 0);
-	this->board[6][0] = new Knight(true, 'N', 6, 0);
+	this->board[1][0] = new Knight(false, 'N', 1, 0);
+	this->board[6][0] = new Knight(false, 'N', 6, 0);
 
-	this->board[2][0] = new Bishop(true, 'B', 2, 0);
-	this->board[5][0] = new Bishop(true, 'B', 5, 0);
+	this->board[2][0] = new Bishop(false, 'B', 2, 0);
+	this->board[5][0] = new Bishop(false, 'B', 5, 0);
 
-	this->board[3][0] = new Queen(true, 'Q', 3, 0);
-	this->board[4][0] = new King(true, 'K', 4, 0);
+	this->board[3][0] = new Queen(false, 'Q', 3, 0);
+	this->board[4][0] = new King(false, 'K', 4, 0);
 
 	for (int i = 0; i < 8; i++)
-		this->board[i][1] = new Pawn(true, 'P', i, 1);
+		this->board[i][1] = new Pawn(false, 'P', i, 1);
 
 	//μαυρα
-	this->board[0][7] = new Rook(true, 'r', 0, 7);
-	this->board[7][7] = new Rook(true, 'r', 7, 7);
+	this->board[0][7] = new Rook(false, 'r', 0, 7);
+	this->board[7][7] = new Rook(false, 'r', 7, 7);
 
-	this->board[1][7] = new Knight(true, 'n', 1, 7);
-	this->board[6][7] = new Knight(true, 'n', 6, 7);
+	this->board[1][7] = new Knight(false, 'n', 1, 7);
+	this->board[6][7] = new Knight(false, 'n', 6, 7);
 
-	this->board[2][7] = new Bishop(true, 'b', 2, 7);
-	this->board[5][7] = new Bishop(true, 'b', 5, 7);
+	this->board[2][7] = new Bishop(false, 'b', 2, 7);
+	this->board[5][7] = new Bishop(false, 'b', 5, 7);
 
-	this->board[3][7] = new Queen(true, 'q', 3, 7);
-	this->board[4][7] = new King(true, 'k', 4, 7);
+	this->board[3][7] = new Queen(false, 'q', 3, 7);
+	this->board[4][7] = new King(false, 'k', 4, 7);
 
 	for (int i = 0; i < 8; i++)
-		this->board[i][6] = new Pawn(true, 'p', i, 6);
+		this->board[i][6] = new Pawn(false, 'p', i, 6);
 
 	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
 		for (int j = 0; j < 7; j++)
@@ -431,4 +431,28 @@ bool Chessboard::stalemate() {
 									return false;
 							}
 	return true;
+}
+
+void Chessboard::promotion(int m, Pawn* pawn) {
+	if (pawn->getLetter() == 'P') {
+		if (m == 1)			//Προαγωγη σε βασιλισσα
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Q', pawn->getPosX(), pawn->getPosY());
+		else if (m == 2)	//Προαγωγη σε πυργο
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Rook(false, 'R', pawn->getPosX(), pawn->getPosY());
+		else if (m == 3)	//Προαγωγη σε αξιωματικο
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Β', pawn->getPosX(), pawn->getPosY());
+		else				//Προαγωγη σε ιππο
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Ν', pawn->getPosX(), pawn->getPosY());
+	}
+	else {
+		if (m == 1)
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'q', pawn->getPosX(), pawn->getPosY());
+		else if (m == 2)
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Rook(false, 'r', pawn->getPosX(), pawn->getPosY());
+		else if (m == 3)
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'b', pawn->getPosX(), pawn->getPosY());
+		else
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'n', pawn->getPosX(), pawn->getPosY());
+	}
+	delete pawn;
 }
