@@ -366,7 +366,8 @@ bool Chessboard::checkmate() {
 	for (int i = 0; i < 7; i++)
 		for (int j = 0; j < 7; j++)
 			if (this->board[i][j] != NULL &&
-				(this->board[i][j]->getLetter() != 'K' && this->board[i][j]->getLetter() != 'k'))
+				(this->board[i][j]->getLetter() != 'K' && this->board[i][j]->getLetter() != 'k') &&
+				isupper(this->board[i][j]->getLetter()) == isupper(this->board[kx][ky]->getLetter()))
 				for (int x = 0; x < 7; x++)
 					for (int y = 0; y < 7; y++)
 						if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
@@ -385,5 +386,49 @@ bool Chessboard::checkmate() {
 							}
 						}
 
+	return true;
+}
+
+bool Chessboard::stalemate() {
+	if (this->kingChecked())	//Εαν ο βασιλιας απειλειται τοτε προφανως δεν υπαρχει πατ
+		return false;
+
+	//Ελεγχος εαν υπαρχει οποιαδηποτε διαθεσιμη κινηση
+	if (this->whiteTurn) {
+		for (int i = 0; i < 7; i++)
+			for (int j = 0; j < 7; j++)
+				if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter()))
+					for (int x = 0; x < 7; x++)
+						for (int y = 0; y < 7; y++)
+							if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
+								Piece* test = this->board[x][y];
+								this->board[x][y] = this->board[i][j];
+								this->board[i][j] = NULL;
+								if (this->kingChecked()) {
+									this->board[i][j] = this->board[x][y];
+									this->board[x][y] = test;
+								}
+								else
+									return false;
+							}
+		return true;
+	}
+	else
+		for (int i = 0; i < 7; i++)
+			for (int j = 0; j < 7; j++)
+				if (this->board[i][j] != NULL && islower(this->board[i][j]->getLetter()))
+					for (int x = 0; x < 7; x++)
+						for (int y = 0; y < 7; y++)
+							if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
+								Piece* test = this->board[x][y];
+								this->board[x][y] = this->board[i][j];
+								this->board[i][j] = NULL;
+								if (this->kingChecked()) {
+									this->board[i][j] = this->board[x][y];
+									this->board[x][y] = test;
+								}
+								else
+									return false;
+							}
 	return true;
 }
