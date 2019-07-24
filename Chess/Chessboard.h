@@ -8,6 +8,7 @@
 #include "Pawn.h"
 #include <math.h>
 #include <cctype>
+using namespace std;
 
 class Chessboard {
 private:

@@ -35,8 +35,8 @@ void UI::play(Chessboard* b) {
 	}
 }
 
-void UI::translate(string command) {
-	int move[4];
+int* UI::translate(string command) {
+	int move[5];
 	if (command.size() == 4) {
 		if (isalpha(command[0]) && isalpha(command[2])) {
 			if (isupper(command[0])) {
@@ -61,23 +61,27 @@ void UI::translate(string command) {
 			move[1] = 8;
 			move[3] = 8;
 		}
+		move[4] = 0;
 	}
 	else if (command.size() == 3)
 		if (command == "0-0")
-			//μικρο ροκε
+			move[4] = 1;	//μικρο ροκε
 		else {
 			move[0] = 8;
 			move[1] = 8;
 			move[2] = 8;
 			move[3] = 8;
+			move[4] = 8;
 		}
 	else if (command.size() == 5)
 		if (command == "0-0-0")
-			//μεγαλο ροκε
+			move[4] = 2; //μεγαλο ροκε
 		else {
 			move[0] = 8;
 			move[1] = 8;
 			move[2] = 8;
 			move[3] = 8;
+			move[4] = 8;
 		}
+	return move;
 }		

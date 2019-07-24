@@ -1,5 +1,4 @@
 #include "Chessboard.h"
-using namespace std;
 
 Chessboard::Chessboard() {
 	this->whiteTurn = true;	//πρωτα παιζει ο λευκος
@@ -43,9 +42,20 @@ Chessboard::Chessboard() {
 bool Chessboard::move(int x, int y, int finX, int finY) {
 	if (this->board[x][y]->checkMove(finX, finY) && this->pathCheck(finX, finY, this->board[x][y])) {
 		//ελεγχος εαν το τετραγωνο προορισμου ειναι κενο ή περιεχει αντιπαλα κοματια
-		if (isupper((this->board[finX][finY]->getLetter())) == isupper(this->board[x][y]->getLetter()) || this->board[finX][finY] == NULL) {
+		if (isupper((this->board[finX][finY]->getLetter())) == isupper(this->board[x][y]->getLetter()) ||
+			this->board[finX][finY] == NULL) {
+			//Ελεγχος εαν η κινηση αυτη θα οδηγουσε σε σαχ για αυτον που παιζει
+			Piece* test = this->board[finX][finY];
 			this->board[finX][finY] = this->board[x][y];
 			this->board[x][y] = NULL;
+			if (this->kingChecked()) {
+				this->board[x][y] = this->board[finX][finY];
+				this->board[finX][finY] = test;
+				return false;
+			}
+
+			this->board[finX][finY]->setPosX(finX);
+			this->board[finX][finY]->setPosY(finY);
 			this->board[finX][finY]->setHasMoved(true);
 			return true;
 		}
@@ -151,6 +161,7 @@ bool Chessboard::pathCheck(int x, int y, Piece* p) {
 					return false;
 		}
 	}
+	return true;
 }
 
 bool Chessboard::kingChecked() {
