@@ -48,7 +48,7 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 			Piece* test = this->board[finX][finY];
 			this->board[finX][finY] = this->board[x][y];
 			this->board[x][y] = NULL;
-			if (this->kingChecked()) {
+			if (this->kingChecked()) {		//Επαναφορα σκακιερας σε περιπτωση σαχ
 				this->board[x][y] = this->board[finX][finY];
 				this->board[finX][finY] = test;
 				return false;
@@ -117,24 +117,24 @@ void Chessboard::showBoard() {
 bool Chessboard::pathCheck(int x, int y, Piece* p) {
 	if (p->getPosX() == x) {	//κινειται καθετα
 		if (p->getPosY() < y) {	//προς τα πανω
-			for (int j = p->getPosY(); j < x; j++)
+			for (int j = p->getPosY(); j < y; j++)
 				if (this->board[x][j] != NULL)	//ελεγχος αν ενα ενδιαμεσο τετραγωνο δεν ειναι κενο
 					return false;
 		}
 		else {	//προς τα κατω
-			for (int j = p->getPosY(); j < x; j--)
+			for (int j = p->getPosY(); j > y; j--)
 				if (this->board[x][j] != NULL)
 					return false;
 		}
 	}
-	else if (p->getPosY == y) {	//κινειται οριζοντια
+	else if (p->getPosY() == y) {	//κινειται οριζοντια
 		if (p->getPosX() < x) {	//προς τα δεξια
 			for (int i = p->getPosX(); i < x; i++)
 				if (this->board[i][y] != NULL)
 					return false;
 		}
 		else {	//προς τα αριστερα
-			for (int i = p->getPosX(); i < x; i--)
+			for (int i = p->getPosX(); i > x; i--)
 				if (this->board[i][y] != NULL)
 					return false;
 		}
@@ -321,4 +321,69 @@ bool Chessboard::castle(bool kingside) {
 				this->board[0][7] = NULL;
 			}
 	}
+}
+
+bool Chessboard::checkmate() {
+	if (!this->kingChecked())	//Δεν γινεται ματ χωρις να απειλειται ο βασιλιας
+		return false;
+
+	int kx, ky;
+	for (int i = 0; i < 7; i++)				//Ευρεση βασιλια
+		for (int j = 0; j < 7; j++)
+			if (this->board[i][j]->getLetter() == 'K' && this->whiteTurn) {
+				kx = i;
+				ky = j;
+				break;
+			}
+			else if (this->board[i][j]->getLetter() == 'k' && !this->whiteTurn) {
+				kx = i;
+				ky = j;
+				break;
+			}
+
+	//Ελεγχος εαν ο βασιλιας μπορει να κουνηθει
+	for (int i = -1; i <= 1; i++)
+		for (int j = -1; j <= 1; j++)
+			if (this->board[kx][ky]->checkMove(kx + i, ky + j) &&
+				this->pathCheck(kx + i, ky + j, this->board[kx][ky])) {
+				//Ελεγχος εαν η κινηση αυτη θα οδηγουσε σε σαχ για αυτον που παιζει
+				Piece* test = this->board[kx][ky];
+				this->board[kx + i][ky + j] = this->board[kx][ky];
+				this->board[kx][ky] = NULL;
+				if (!this->kingChecked()) {		//Επαναφορα σκακιερας σε περιπτωση σαχ
+					this->board[kx][ky] = this->board[kx + i][ky + j];
+					this->board[kx + i][ky + j] = test;
+					return false;
+				}
+				else {
+					//Επαναφορα
+					this->board[kx][ky] = this->board[kx + i][ky + j];
+					this->board[kx + i][ky + j] = test;
+				}
+			}
+
+	//Ελεγχος εαν καποιο κομματι μπορει να προστατεψει τον βασιλια
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < 7; j++)
+			if (this->board[i][j] != NULL &&
+				(this->board[i][j]->getLetter() != 'K' && this->board[i][j]->getLetter() != 'k'))
+				for (int x = 0; x < 7; x++)
+					for (int y = 0; y < 7; y++)
+						if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
+							Piece* test = this->board[i][j];
+							this->board[x][y] = this->board[i][j];
+							this->board[i][j] = NULL;
+							if (!this->kingChecked()) {		//Επαναφορα σκακιερας σε περιπτωση σαχ
+								this->board[i][j] = this->board[x][y];
+								this->board[x][y] = test;
+								return false;
+							}
+							else {
+								//Επαναφορα
+								this->board[i][j] = this->board[x][y];
+								this->board[x][y] = test;
+							}
+						}
+
+	return true;
 }
