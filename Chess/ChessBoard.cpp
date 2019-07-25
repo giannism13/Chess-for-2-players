@@ -3,36 +3,36 @@
 Chessboard::Chessboard() {
 	this->whiteTurn = true;	//πρωτα παιζει ο λευκος
 	//λευκα
-	this->board[0][0] = new Rook(false, 'R', 0, 0);
-	this->board[7][0] = new Rook(false, 'R', 7, 0);
+	this->board[0][0] = new Piece(false, 'R', 0, 0);
+	this->board[7][0] = new Piece(false, 'R', 7, 0);
 
-	this->board[1][0] = new Knight(false, 'N', 1, 0);
-	this->board[6][0] = new Knight(false, 'N', 6, 0);
+	this->board[1][0] = new Piece(false, 'N', 1, 0);
+	this->board[6][0] = new Piece(false, 'N', 6, 0);
 
-	this->board[2][0] = new Bishop(false, 'B', 2, 0);
-	this->board[5][0] = new Bishop(false, 'B', 5, 0);
+	this->board[2][0] = new Piece(false, 'B', 2, 0);
+	this->board[5][0] = new Piece(false, 'B', 5, 0);
 
-	this->board[3][0] = new Queen(false, 'Q', 3, 0);
-	this->board[4][0] = new King(false, 'K', 4, 0);
+	this->board[3][0] = new Piece(false, 'Q', 3, 0);
+	this->board[4][0] = new Piece(false, 'K', 4, 0);
 
 	for (int i = 0; i < 8; i++)
-		this->board[i][1] = new Pawn(false, 'P', i, 1);
+		this->board[i][1] = new Piece(false, 'P', i, 1);
 
 	//μαυρα
-	this->board[0][7] = new Rook(false, 'r', 0, 7);
-	this->board[7][7] = new Rook(false, 'r', 7, 7);
+	this->board[0][7] = new Piece(false, 'r', 0, 7);
+	this->board[7][7] = new Piece(false, 'r', 7, 7);
 
-	this->board[1][7] = new Knight(false, 'n', 1, 7);
-	this->board[6][7] = new Knight(false, 'n', 6, 7);
+	this->board[1][7] = new Piece(false, 'n', 1, 7);
+	this->board[6][7] = new Piece(false, 'n', 6, 7);
 
-	this->board[2][7] = new Bishop(false, 'b', 2, 7);
-	this->board[5][7] = new Bishop(false, 'b', 5, 7);
+	this->board[2][7] = new Piece(false, 'b', 2, 7);
+	this->board[5][7] = new Piece(false, 'b', 5, 7);
 
-	this->board[3][7] = new Queen(false, 'q', 3, 7);
-	this->board[4][7] = new King(false, 'k', 4, 7);
+	this->board[3][7] = new Piece(false, 'q', 3, 7);
+	this->board[4][7] = new Piece(false, 'k', 4, 7);
 
 	for (int i = 0; i < 8; i++)
-		this->board[i][6] = new Pawn(false, 'p', i, 6);
+		this->board[i][6] = new Piece(false, 'p', i, 6);
 
 	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
 		for (int j = 0; j < 7; j++)
@@ -112,6 +112,32 @@ void Chessboard::showBoard() {
 }
 
 bool Chessboard::pathCheck(int x, int y, Piece* p) {
+	//Ειδικοι κανονες για πιονια
+	if (p->getLetter() == 'P') {
+		if (p->getPosX() == x && this->board[x][y] == NULL)
+			return true;
+		else if (x == p->getPosX() + 1 && y == p->getPosY() + 1 && this->board[p->getPosX() + 1][p->getPosY() + 1] != NULL &&
+			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter()))
+			return true;
+		else if (x == p->getPosX() - 1 && y == p->getPosY() + 1 && this->board[p->getPosX() - 1][p->getPosY() + 1] != NULL &&
+			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter()))
+			return true;
+		else
+			return false;
+	}
+	else if (p->getLetter() == 'p') {
+		if (p->getPosX() == x && this->board[x][y] == NULL)
+			return true;
+		else if (x == p->getPosX() + 1 && y == p->getPosY() - 1 && this->board[p->getPosX() + 1][p->getPosY() - 1] != NULL &&
+			isupper(this->board[p->getPosX() + 1][p->getPosY() - 1]->getLetter()))
+			return true;
+		else if (x == p->getPosX() - 1 && y == p->getPosY() - 1 && this->board[p->getPosX() - 1][p->getPosY() + 1] != NULL &&
+			isupper(this->board[p->getPosX() + 1][p->getPosY() - 1]->getLetter()))
+			return true;
+		else
+			return false;
+	}
+
 	if (p->getPosX() == x) {	//κινειται καθετα
 		if (p->getPosY() < y) {	//προς τα πανω
 			for (int j = p->getPosY(); j < y; j++)
@@ -430,26 +456,26 @@ bool Chessboard::stalemate() {
 	return true;
 }
 
-void Chessboard::promotion(int m, Pawn* pawn) {
+void Chessboard::promotion(int m, Piece* pawn) {
 	if (pawn->getLetter() == 'P') {
 		if (m == 1)			//Προαγωγη σε βασιλισσα
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Q', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'Q', pawn->getPosX(), pawn->getPosY());
 		else if (m == 2)	//Προαγωγη σε πυργο
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Rook(false, 'R', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'R', pawn->getPosX(), pawn->getPosY());
 		else if (m == 3)	//Προαγωγη σε αξιωματικο
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Β', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'Β', pawn->getPosX(), pawn->getPosY());
 		else				//Προαγωγη σε ιππο
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'Ν', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'Ν', pawn->getPosX(), pawn->getPosY());
 	}
-	else {
+	else if (pawn->getLetter() == 'p') {
 		if (m == 1)
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'q', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'q', pawn->getPosX(), pawn->getPosY());
 		else if (m == 2)
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Rook(false, 'r', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'r', pawn->getPosX(), pawn->getPosY());
 		else if (m == 3)
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'b', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'b', pawn->getPosX(), pawn->getPosY());
 		else
-			this->board[pawn->getPosX()][pawn->getPosY()] = new Queen(false, 'n', pawn->getPosX(), pawn->getPosY());
+			this->board[pawn->getPosX()][pawn->getPosY()] = new Piece(false, 'n', pawn->getPosX(), pawn->getPosY());
 	}
 	delete pawn;
 }

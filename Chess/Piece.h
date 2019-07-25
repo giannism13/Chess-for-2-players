@@ -11,7 +11,12 @@ protected:
 	int posY;
 
 public:
-	virtual bool checkMove(int, int) = 0;		//ελεγχος εγκυρης κινησης
+	Piece(bool, char, int ,int);		//Constructor
+	Piece();
+	Piece(const Piece&);
+
+
+	bool checkMove(int, int);	//ελεγχος εγκυρης κινησης
 	
 	//accessor functions
 	void setHasMoved(bool);

@@ -9,8 +9,7 @@ int main() {
 			UI::newGame();
 			break;
 		case 2:
-			Chessboard b = UI::loadGame();
-			UI::play(&b);
+			UI::loadGame();
 			break;
 		case 3:
 			exit(0);

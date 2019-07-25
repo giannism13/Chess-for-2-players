@@ -172,12 +172,16 @@ string UI::saveUI() {
 	return file;
 }
 
-Chessboard UI::loadGame() {
+void UI::loadGame() {
 	string name;
 	Chessboard b;
 
 	cout << "Δωστε το ονομα του αρχειου: ";
 	getline(cin, name);
 	b.load(name);
-	return b;
+	UI::play(&b);
+}
+
+void UI::replay() {
+
 }

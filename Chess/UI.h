@@ -16,5 +16,6 @@ public:
 	static void play(Chessboard*);			//Κυρια λειτουργια παιχνιδιου
 	static vector<int> translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
 	static string saveUI();					//διαβαζει το ονομα του αρχειου στο οποιο θα αποθηκευτει η παρτιδα
-	static Chessboard loadGame();					//Φορτωνει ενα αποθηκευμενο παιχνιδι
+	static void loadGame();			//Φορτωνει ενα αποθηκευμενο παιχνιδι
+	static void replay();					//Επαναλαμβανει τις κινησεις απο την αρχη
 };
