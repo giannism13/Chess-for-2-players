@@ -21,22 +21,101 @@ void UI::newGame() {
 
 void UI::play(Chessboard* b) {
 	string move;
+	vector<int> m;
 	while (true) {
 		b->showBoard();
-		cout << endl << "Κινηση Λευκου: ";
-		getline(cin, move);
-		//checks
-
-
+		do {
+			cout << endl << "Κινηση Λευκου: ";
+			getline(cin, move);
+			if (move == "0-0") {		//Μικρο ροκε
+				if (!b->castle(true))
+					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
+				else
+					b->setWhiteTurn(false);
+			}
+			else if (move == "0-0-0") {	//Μεγαλο ροκε
+				if (!b->castle(false))
+					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
+				else
+					b->setWhiteTurn(false);
+			}
+			else if (move == "save") {	//Αποθηκευση παιχνιδιου
+				string name = UI::saveUI();
+				b->save(name);
+				cout << "Το παιχνιδι αποθηκευτηκε! Πιεστε οτιδηποτε για εξοδο στο κεντρικο μενου" << endl;
+				system("pause");
+				exit(0);
+			}
+			else if (move == "replay") {	//Επαναληψη κινησεων
+				//todo
+			}
+			else {
+				m = UI::translate(move);
+				if (b->move(m[0], m[1], m[2], m[3])) {
+					if (b->checkmate()) {
+						cout << "ΜΑΤ! Νικη λευκου!" << endl;
+						system("pause");
+						exit(0);
+					}
+					if (b->stalemate()) {
+						cout << "ΠΑΤ! Ισοπαλια!" << endl;
+						system("pause");
+						exit(0);
+					}
+					b->setWhiteTurn(false);
+				}
+				else
+					cout << "Μη εγκυρη κινηση!" << endl;
+			}
+		} while (b->getWhiteTurn());
+		
 		b->showBoard();
-		cout << endl << "Κινηση Μαυρου: ";
-		getline(cin, move);
-		//checks
+		do {
+			cout << endl << "Κινηση Μαυρου: ";
+			getline(cin, move);
+			if (move == "0-0") {		//Μικρο ροκε
+				if (!b->castle(true))
+					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
+				else
+					b->setWhiteTurn(true);
+			}
+			else if (move == "0-0-0") {	//Μεγαλο ροκε
+				if (!b->castle(false))
+					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
+				else
+					b->setWhiteTurn(true);
+			}
+			else if (move == "save") {	//Αποθηκευση παιχνιδιου
+				cout << "Το παιχνιδι δεν μπορει να μονο στη σειρα στο λευκου!" << endl;
+				exit(0);
+			}
+			else if (move == "replay") {	//Επαναληψη κινησεων
+				//todo
+			}
+			else {
+				m = UI::translate(move);
+				if (b->move(m[0], m[1], m[2], m[3])) {
+					if (b->checkmate()) {
+						cout << "ΜΑΤ! Νικη Μαυρου!" << endl;
+						system("pause");
+						exit(0);
+					}
+					if (b->stalemate()) {
+						cout << "ΠΑΤ! Ισοπαλια!" << endl;
+						system("pause");
+						exit(0);
+					}
+					b->setWhiteTurn(true);
+				}
+				else
+					cout << "Μη εγκυρη κινηση!" << endl;
+			}
+		} while (!b->getWhiteTurn());
 	}
 }
 
-int* UI::translate(string command) {
-	int move[5];
+vector<int> UI::translate(string command) {
+	vector<int> move;
 	if (command.size() == 4) {
 		if (isalpha(command[0]) && isalpha(command[2])) {
 			if (isupper(command[0])) {
@@ -86,13 +165,19 @@ int* UI::translate(string command) {
 	return move;
 }
 
-string UI::saveUI(bool whiteTurn) {
+string UI::saveUI() {
 	string file;
-	if (whiteTurn == false) {
-		cout << "Η αποθηκευση ταμπλο μπορει να γινει μονο στη σειρα του λευκου" << endl;
-		return "!@#$%";
-	}
 	cout << "Δωστε το ονομα του αρχειου: ";
 	getline(cin, file);
 	return file;
+}
+
+Chessboard UI::loadGame() {
+	string name;
+	Chessboard b;
+
+	cout << "Δωστε το ονομα του αρχειου: ";
+	getline(cin, name);
+	b.load(name);
+	return b;
 }

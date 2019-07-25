@@ -6,13 +6,15 @@
 #include <iostream>
 #include <string>
 #include "Chessboard.h"
+#include <vector>
 using namespace std;
 
 class UI {
 public:
-	static int displayMenu();		//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
-	static void newGame();			//Ξεκιναει νεο παιχνιδι
-	static void play(Chessboard*);	//Κυρια λειτουργια παιχνιδιου
-	static int* translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
-	static string saveUI(bool);		//Ελεγχει εαν η παρτιδα μπορει να αποθηκευτει και διαβαζει το ονομα του αρχειου
+	static int displayMenu();				//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
+	static void newGame();					//Ξεκιναει νεο παιχνιδι
+	static void play(Chessboard*);			//Κυρια λειτουργια παιχνιδιου
+	static vector<int> translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
+	static string saveUI();					//διαβαζει το ονομα του αρχειου στο οποιο θα αποθηκευτει η παρτιδα
+	static Chessboard loadGame();					//Φορτωνει ενα αποθηκευμενο παιχνιδι
 };

@@ -3,15 +3,14 @@
 
 int main() {
 	system("chcp 1253");
-	//Chessboard b;
-	//b.showBoard();
 	while (true) {
 		switch (UI::displayMenu()) {
 		case 1:
 			UI::newGame();
 			break;
 		case 2:
-			//TODO File input
+			Chessboard b = UI::loadGame();
+			UI::play(&b);
 			break;
 		case 3:
 			exit(0);

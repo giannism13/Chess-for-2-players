@@ -65,32 +65,31 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 }
 
 void Chessboard::showBoard() {
-	system("chcp 65001");	//για την υποστηριξη unicode χαρακτηρων
 	//τυπωση οριου πρωτης γραμμης
 	cout << ( char) 218;	//Γ
 	for (int i = 0; i < 16; i++) {
 		if (i % 2 == 0)
-			cout << ( char) 196;	//-
+			cout << ( unsigned char) 196;	//-
 		else
-			cout << ( char) 194;	//T
+			cout << ( unsigned char) 194;	//T
 
-		cout << ( char) 191 << endl;
+		cout << ( unsigned char) 191 << endl;
 	}
 	//τυπωση σκακιερας
 	for (int i = 0; i < 14; i++)
 		for (int j = 0; j < 16; j++) {
 			if (i % 2 != 0)
 				if (j == 0)
-					cout << ( char) 195;
+					cout << ( unsigned char) 195;
 				else if (j == 16)
-					cout << ( char) 180;
+					cout << ( unsigned char) 180;
 				else if (j % 2 == 0)
-					cout << ( char) 196;	//-
+					cout << ( unsigned char) 196;	//-
 				else
-					cout << ( char) 197;	//+
+					cout << ( unsigned char) 197;	//+
 			else
 				if (j % 2 == 0)
-					cout << ( char) 179;	//|
+					cout << ( unsigned char) 179;	//|
 				else if (this->board[i / 2][j / 2] == NULL)
 					cout << "  ";
 				else
@@ -99,15 +98,13 @@ void Chessboard::showBoard() {
 			cout << endl;
 		}
 
-	system("chcp 1253");
-
 	//τυπωση κατω οριου τελευταιας γραμμης
-	cout << ( char) 192;	//L
+	cout << ( unsigned char) 192;	//L
 	for (int i = 0; i < 16; i++)
 		if (i % 2 == 0)
-			cout << ( char) 196;	//-
+			cout << ( unsigned char) 196;	//-
 		else
-			cout << ( char) 193;
+			cout << ( unsigned char) 193;
 
 	cout << ( char) 217 << endl;
 
@@ -459,6 +456,10 @@ void Chessboard::promotion(int m, Pawn* pawn) {
 
 bool Chessboard::getWhiteTurn() { return whiteTurn; }
 
+void Chessboard::setWhiteTurn(bool whiteTurn) {
+	this->whiteTurn = whiteTurn;
+}
+
 void Chessboard::save(string filename) {
 	ofstream file;
 	file.open(filename, ios::binary);
@@ -476,5 +477,5 @@ void Chessboard::load(string filename) {
 	file.open(filename, ios::binary);
 	while (file.read(reinterpret_cast<char*>(&piece), sizeof(piece)))
 		this->board[piece->getPosX()][piece->getPosY()] = piece;
-	file.close;
+	file.close();
 }

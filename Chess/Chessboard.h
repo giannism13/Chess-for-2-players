@@ -28,6 +28,7 @@ public:
 	void save(string);					//Αποθηκευει το ταμπλο σε αρχειο
 	void load(string);					//Φορτωνει ενα ταμπλο απο αρχειο;
 
-	//Getters
+	//Accessors 
 	bool getWhiteTurn();
+	void setWhiteTurn(bool);
 };
