@@ -10,8 +10,9 @@ using namespace std;
 
 class UI {
 public:
-	static int displayMenu();	//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
-	static void newGame();		//Ξεκιναει νεο παιχνιδι
+	static int displayMenu();		//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
+	static void newGame();			//Ξεκιναει νεο παιχνιδι
 	static void play(Chessboard*);	//Κυρια λειτουργια παιχνιδιου
 	static int* translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
+	static string saveUI(bool);		//Ελεγχει εαν η παρτιδα μπορει να αποθηκευτει και διαβαζει το ονομα του αρχειου
 };

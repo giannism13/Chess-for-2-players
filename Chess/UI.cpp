@@ -84,4 +84,15 @@ int* UI::translate(string command) {
 			move[4] = 8;
 		}
 	return move;
-}		
+}
+
+string UI::saveUI(bool whiteTurn) {
+	string file;
+	if (whiteTurn == false) {
+		cout << "Η αποθηκευση ταμπλο μπορει να γινει μονο στη σειρα του λευκου" << endl;
+		return "!@#$%";
+	}
+	cout << "Δωστε το ονομα του αρχειου: ";
+	getline(cin, file);
+	return file;
+}

@@ -456,3 +456,25 @@ void Chessboard::promotion(int m, Pawn* pawn) {
 	}
 	delete pawn;
 }
+
+bool Chessboard::getWhiteTurn() { return whiteTurn; }
+
+void Chessboard::save(string filename) {
+	ofstream file;
+	file.open(filename, ios::binary);
+
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < 7; j++)
+			if (this->board[i][j] != NULL)
+				file.write(reinterpret_cast<char*>(&this->board[i][j]), sizeof(this->board[i][j]));
+	file.close();
+}
+
+void Chessboard::load(string filename) {
+	ifstream file;
+	Piece* piece;
+	file.open(filename, ios::binary);
+	while (file.read(reinterpret_cast<char*>(&piece), sizeof(piece)))
+		this->board[piece->getPosX()][piece->getPosY()] = piece;
+	file.close;
+}
