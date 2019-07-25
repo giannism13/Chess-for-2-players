@@ -22,6 +22,9 @@ void UI::newGame() {
 void UI::play(Chessboard* b) {
 	string move;
 	vector<int> m;
+	vector<Round> rounds;
+	Round r;
+
 	while (true) {
 		b->showBoard();
 		do {
@@ -30,14 +33,18 @@ void UI::play(Chessboard* b) {
 			if (move == "0-0") {		//Μικρο ροκε
 				if (!b->castle(true))
 					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
-				else
+				else {
 					b->setWhiteTurn(false);
+					r.setWhite(move);
+				}
 			}
 			else if (move == "0-0-0") {	//Μεγαλο ροκε
 				if (!b->castle(false))
 					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
-				else
+				else {
 					b->setWhiteTurn(false);
+					r.setWhite(move);
+				}
 			}
 			else if (move == "save") {	//Αποθηκευση παιχνιδιου
 				string name = UI::saveUI();
@@ -63,12 +70,13 @@ void UI::play(Chessboard* b) {
 						exit(0);
 					}
 					b->setWhiteTurn(false);
+					r.setWhite(move);
 				}
 				else
 					cout << "Μη εγκυρη κινηση!" << endl;
 			}
 		} while (b->getWhiteTurn());
-		
+
 		b->showBoard();
 		do {
 			cout << endl << "Κινηση Μαυρου: ";
@@ -76,14 +84,18 @@ void UI::play(Chessboard* b) {
 			if (move == "0-0") {		//Μικρο ροκε
 				if (!b->castle(true))
 					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
-				else
+				else {
 					b->setWhiteTurn(true);
+					r.setBlack(move);
+				}
 			}
 			else if (move == "0-0-0") {	//Μεγαλο ροκε
 				if (!b->castle(false))
 					cout << "Το ροκε εχει ηδη γινει ή δεν επιτρεπεται!" << endl;
-				else
+				else {
 					b->setWhiteTurn(true);
+					r.setBlack(move);
+				}
 			}
 			else if (move == "save") {	//Αποθηκευση παιχνιδιου
 				cout << "Το παιχνιδι δεν μπορει να μονο στη σειρα στο λευκου!" << endl;
@@ -106,11 +118,13 @@ void UI::play(Chessboard* b) {
 						exit(0);
 					}
 					b->setWhiteTurn(true);
+					r.setBlack(move);
 				}
 				else
 					cout << "Μη εγκυρη κινηση!" << endl;
 			}
 		} while (!b->getWhiteTurn());
+		rounds.push_back(r);
 	}
 }
 
@@ -182,6 +196,36 @@ void UI::loadGame() {
 	UI::play(&b);
 }
 
-void UI::replay() {
+void UI::replay(vector<Round> rounds) {
+	Chessboard b;
+	Round r;
+	string move;
+	vector<int> m;
+	for (int i = 0; i < rounds.size(); i++) {
+		r = rounds[i];
+		move = r.getWhite();
+		b.showBoard();
+		if (move == "0-0")
+			b.setWhiteTurn(false);
+		else if (move == "0-0-0")
+			b.setWhiteTurn(false);
+		else {
+			m = UI::translate(move);
+			b.move(m[0], m[1], m[2], m[3]);
+			b.setWhiteTurn(false);
+		}
 
+		move = r.getBlack();
+		b.showBoard();
+		if (move == "0-0")
+			b.setWhiteTurn(true);
+		else if (move == "0-0-0")
+			b.setWhiteTurn(true);
+		else {
+			m = UI::translate(move);
+			b.move(m[0], m[1], m[2], m[3]);
+			b.setWhiteTurn(true);
+		}
+	}
+	UI::play(&b);	//συνεχεια παιχνιδιου
 }

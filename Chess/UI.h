@@ -7,6 +7,7 @@
 #include <string>
 #include "Chessboard.h"
 #include <vector>
+#include "Round.h"
 using namespace std;
 
 class UI {
@@ -16,6 +17,6 @@ public:
 	static void play(Chessboard*);			//Κυρια λειτουργια παιχνιδιου
 	static vector<int> translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
 	static string saveUI();					//διαβαζει το ονομα του αρχειου στο οποιο θα αποθηκευτει η παρτιδα
-	static void loadGame();			//Φορτωνει ενα αποθηκευμενο παιχνιδι
-	static void replay();					//Επαναλαμβανει τις κινησεις απο την αρχη
+	static void loadGame();					//Φορτωνει ενα αποθηκευμενο παιχνιδι
+	static void replay(vector<Round>);					//Επαναλαμβανει τις κινησεις απο την αρχη
 };
