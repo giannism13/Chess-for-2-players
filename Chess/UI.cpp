@@ -53,9 +53,8 @@ void UI::play(Chessboard* b) {
 				system("pause");
 				exit(0);
 			}
-			else if (move == "replay") {	//Επαναληψη κινησεων
-				//todo
-			}
+			else if (move == "replay")	//Επαναληψη κινησεων
+				UI::replay(rounds);
 			else {
 				m = UI::translate(move);
 				if (b->move(m[0], m[1], m[2], m[3])) {
@@ -101,9 +100,8 @@ void UI::play(Chessboard* b) {
 				cout << "Το παιχνιδι δεν μπορει να μονο στη σειρα στο λευκου!" << endl;
 				exit(0);
 			}
-			else if (move == "replay") {	//Επαναληψη κινησεων
-				//todo
-			}
+			else if (move == "replay")	//Επαναληψη κινησεων
+				UI::replay(rounds);
 			else {
 				m = UI::translate(move);
 				if (b->move(m[0], m[1], m[2], m[3])) {
