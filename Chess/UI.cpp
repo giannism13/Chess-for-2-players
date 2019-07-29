@@ -21,7 +21,7 @@ void UI::newGame() {
 
 void UI::play(Chessboard* b) {
 	string move;
-	vector<int> m;
+	vector<char> m;
 	vector<Round> rounds;
 	Round r;
 
@@ -126,19 +126,16 @@ void UI::play(Chessboard* b) {
 	}
 }
 
-vector<int> UI::translate(string command) {
-	vector<int> move;
+vector<char> UI::translate(string command) {
+	vector<char> move;
+	move.assign(4,0);
 	if (command.size() == 4) {
 		if (isalpha(command[0]) && isalpha(command[2])) {
 			if (isupper(command[0])) {
-				command[0] += 0;
-				command[2] += 0;
 				move[0] = command[0] - 65;
 				move[2] = command[2] - 65;
 			}
 			else {
-				command[0] += 0;
-				command[2] += 0;
 				move[0] = command[0] - 97;
 				move[2] = command[2] - 97;
 			}
@@ -202,7 +199,7 @@ void UI::replay(vector<Round> rounds) {
 	Chessboard b;
 	Round r;
 	string move;
-	vector<int> m;
+	vector<char> m;
 	for (int i = 0; i < rounds.size(); i++) {
 		r = rounds[i];
 		move = r.getWhite();

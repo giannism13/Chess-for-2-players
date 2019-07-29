@@ -15,7 +15,7 @@ public:
 	static int displayMenu();				//εμφανιζει το αρχικο μενου και διαβαζει την επιλογη του χρηστη
 	static void newGame();					//Ξεκιναει νεο παιχνιδι
 	static void play(Chessboard*);			//Κυρια λειτουργια παιχνιδιου
-	static vector<int> translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
+	static vector<char> translate(string);	//μεταφραζει την εντολη που δινει ο παικτης
 	static string saveUI();					//διαβαζει το ονομα του αρχειου στο οποιο θα αποθηκευτει η παρτιδα
 	static void loadGame();					//Φορτωνει ενα αποθηκευμενο παιχνιδι
 	static void replay(vector<Round>);					//Επαναλαμβανει τις κινησεις απο την αρχη
