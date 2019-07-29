@@ -1,4 +1,4 @@
-#include "Chessboard.h"
+
 #include "UI.h"
 
 int main() {
@@ -14,7 +14,7 @@ int main() {
 		case 3:
 			exit(0);
 		default:
-			cout << "Λαθος επιλογη! Παρακαλω ξαναπροσπαθειστε!" << endl;
+			cout << "Λάθος επιλογή! Παρακαλώ ξαναπρονσπαθήστε!" << endl;
 			break;
 		}
 	}

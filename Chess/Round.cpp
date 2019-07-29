@@ -1,5 +1,10 @@
 #include "Round.h"
 
+Round::Round(){
+	this->white = "0";
+	this->black = "0";
+}
+
 void Round::setWhite(string white) {
 	this->white = white;
 }
@@ -15,3 +20,4 @@ string Round::getWhite() {
 string Round::getBlack() {
 	return this->black;
 }
+

@@ -1,13 +1,13 @@
-#pragma once
 //Αυτη η κλαση χρησιμοποιειται για την διαχειριση της διεπαφης χρηστη
 //καθως και την επεξεργασια των δεδομενων που εισαγονται απο αυτον, ωστε
 //να ειναι χρησιμοποιησιμα απο τις αλλες κλασεις.
-
+#ifndef UI_h
+#define UI_h
 #include <iostream>
 #include <string>
-#include "Chessboard.h"
 #include <vector>
 #include "Round.h"
+#include "Chessboard.h"
 using namespace std;
 
 class UI {
@@ -20,3 +20,4 @@ public:
 	static void loadGame();					//Φορτωνει ενα αποθηκευμενο παιχνιδι
 	static void replay(vector<Round>);					//Επαναλαμβανει τις κινησεις απο την αρχη
 };
+#endif

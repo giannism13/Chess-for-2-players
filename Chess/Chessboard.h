@@ -1,3 +1,6 @@
+#ifndef Chessboard_h
+#define Chessboard_h
+
 #pragma once
 #include "Piece.h"
 #include <math.h>
@@ -26,3 +29,4 @@ public:
 	bool getWhiteTurn();
 	void setWhiteTurn(bool);
 };
+#endif

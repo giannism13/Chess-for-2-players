@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Piece_h
+#define Piece_h
 #include <math.h>
 #include <iostream>
 using namespace std;
@@ -29,3 +30,4 @@ public:
 	int getPosY();
 	char getLetter();
 };
+#endif

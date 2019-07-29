@@ -34,9 +34,10 @@ Chessboard::Chessboard() {
 	for (int i = 0; i < 8; i++)
 		this->board[i][6] = new Piece(false, 'p', i, 6);
 
-	for (int i = 2; i < 6; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
-		for (int j = 0; j < 7; j++)
-			this->board[i][j] = NULL;
+	for (int i = 0; i < 8; i++)		//τα υπολοιπα τετραγωνα πρεπει να ειναι "κενα"
+		for (int j = 2; j < 6; j++)
+			//this->board[i][j] = new Piece(false, ' ', i, j);
+			this->board[i][j] = NULL;		
 }
 
 bool Chessboard::move(int x, int y, int finX, int finY) {
@@ -65,50 +66,21 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 }
 
 void Chessboard::showBoard() {
-	//τυπωση οριου πρωτης γραμμης
-	cout << ( char) 218;	//Γ
-	for (int i = 0; i < 16; i++) {
-		if (i % 2 == 0)
-			cout << ( unsigned char) 196;	//-
-		else
-			cout << ( unsigned char) 194;	//T
-
-		cout << ( unsigned char) 191 << endl;
-	}
-	//τυπωση σκακιερας
-	for (int i = 0; i < 14; i++)
-		for (int j = 0; j < 16; j++) {
-			if (i % 2 != 0)
-				if (j == 0)
-					cout << ( unsigned char) 195;
-				else if (j == 16)
-					cout << ( unsigned char) 180;
-				else if (j % 2 == 0)
-					cout << ( unsigned char) 196;	//-
-				else
-					cout << ( unsigned char) 197;	//+
+	system("cls");
+	cout << "   +---+---+---+---+---+---+---+---+" << endl;
+	for (int y = 0; y < 8; y++){
+		cout << " " << y+1 << " |";
+		for (int x = 0; x < 8; x++) {
+			if (this->board[x][y] != NULL)
+				cout << " " << this->board[x][y]->getLetter() << " |";
 			else
-				if (j % 2 == 0)
-					cout << ( unsigned char) 179;	//|
-				else if (this->board[i / 2][j / 2] == NULL)
-					cout << "  ";
-				else
-					cout << this->board[i / 2][j / 2]->getLetter() << " ";
-
-			cout << endl;
+				cout << "   |";
 		}
-
-	//τυπωση κατω οριου τελευταιας γραμμης
-	cout << ( unsigned char) 192;	//L
-	for (int i = 0; i < 16; i++)
-		if (i % 2 == 0)
-			cout << ( unsigned char) 196;	//-
-		else
-			cout << ( unsigned char) 193;
-
-	cout << ( char) 217 << endl;
-
-	cout << " A B C D E F G H" << endl;
+		cout << endl;
+		cout << "   +---+---+---+---+---+---+---+---+" << endl;
+	}
+	cout << "     A   B   C   D   E   F   G   H " << endl;
+	fflush(stdin);
 }
 
 bool Chessboard::pathCheck(int x, int y, Piece* p) {
@@ -189,8 +161,8 @@ bool Chessboard::pathCheck(int x, int y, Piece* p) {
 
 bool Chessboard::kingChecked() {
 	int kx, ky;
-	for (int i = 0; i < 7; i++)				//Ευρεση βασιλια
-		for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 8; i++)				//Ευρεση βασιλια
+		for (int j = 0; j < 8; j++)
 			if (this->board[i][j]->getLetter() == 'K' && this->whiteTurn) {
 				kx = i;
 				ky = j;
@@ -202,8 +174,8 @@ bool Chessboard::kingChecked() {
 				break;
 			}
 
-	for (int i = 0; i < 7; i++)				//Ελεγχος εαν καποιο αντιπαλο κοματι "βλεπει" τον βασιλια
-		for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 8; i++)				//Ελεγχος εαν καποιο αντιπαλο κοματι "βλεπει" τον βασιλια
+		for (int j = 0; j < 8 ; j++)
 			if (this->board[i][j] != NULL && this->whiteTurn && isupper(this->board[i][j]->getLetter())) {
 				//Ο ιππος δεν χρειαζεται ελεγχο διαδρομης
 				if (this->board[i][j]->getLetter() == 'N' && this->board[i][j]->checkMove(kx, ky))
@@ -231,8 +203,8 @@ bool Chessboard::castle(bool kingside) {
 				if (this->board[5][0] != NULL || this->board[6][0] != NULL)	//Ελεγχος εαν τα ενδιαμεσα τετραγωνα ειναι ελευθερα
 					return false;
 				//Ελεγχος εαν τα ενδιαμεσα τετραγωνα απειλουνται
-				for (int i = 0; i < 7; i++)
-					for (int j = 0; j < 7; j++)
+				for (int i = 0; i < 8; i++)
+					for (int j = 0; j < 8; j++)
 						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
 							if (this->board[i][j]->getLetter() == 'N' && (this->board[i][j]->checkMove(6, 0) ||
 								this->board[i][j]->checkMove(5, 0)))
@@ -261,8 +233,8 @@ bool Chessboard::castle(bool kingside) {
 				!this->kingChecked()) {
 				if (this->board[5][7] != NULL || this->board[6][7] != NULL)
 					return false;
-				for (int i = 0; i < 7; i++)
-					for (int j = 0; j < 7; j++)
+				for (int i = 0; i < 8; i++)
+					for (int j = 0; j < 8; j++)
 						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
 							if (this->board[i][j]->getLetter() == 'n' && (this->board[i][j]->checkMove(6, 7) ||
 								this->board[i][j]->checkMove(5, 7)))
@@ -292,8 +264,8 @@ bool Chessboard::castle(bool kingside) {
 				if (this->board[1][0] != NULL || this->board[2][0] != NULL || this->board[3][0] != NULL)	//Ελεγχος εαν τα ενδιαμεσα τετραγωνα ειναι ελευθερα
 					return false;
 				//Ελεγχος εαν τα ενδιαμεσα τετραγωνα απειλουνται
-				for (int i = 0; i < 7; i++)
-					for (int j = 0; j < 7; j++)
+				for (int i = 0; i < 8; i++)
+					for (int j = 0; j < 8; j++)
 						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
 							if (this->board[i][j]->getLetter() == 'N' && (this->board[i][j]->checkMove(1, 0) ||
 								this->board[i][j]->checkMove(2, 0) || this->board[i][j]->checkMove(3, 0)))
@@ -322,8 +294,8 @@ bool Chessboard::castle(bool kingside) {
 				!this->kingChecked()) {
 				if (this->board[1][7] != NULL || this->board[2][7] != NULL || this->board[3][0] != NULL)
 					return false;
-				for (int i = 0; i < 7; i++)
-					for (int j = 0; j < 7; j++)
+				for (int i = 0; i < 8; i++)
+					for (int j = 0; j < 8; j++)
 						if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter())) {
 							if (this->board[i][j]->getLetter() == 'n' && (this->board[i][j]->checkMove(1, 7) ||
 								this->board[i][j]->checkMove(2, 7) || this->board[i][j]->checkMove(3, 7)))
@@ -351,8 +323,8 @@ bool Chessboard::checkmate() {
 		return false;
 
 	int kx, ky;
-	for (int i = 0; i < 7; i++)				//Ευρεση βασιλια
-		for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 8; i++)				//Ευρεση βασιλια
+		for (int j = 0; j < 8; j++)
 			if (this->board[i][j]->getLetter() == 'K' && this->whiteTurn) {
 				kx = i;
 				ky = j;
@@ -386,13 +358,13 @@ bool Chessboard::checkmate() {
 			}
 
 	//Ελεγχος εαν καποιο κομματι μπορει να προστατεψει τον βασιλια
-	for (int i = 0; i < 7; i++)
-		for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++)
 			if (this->board[i][j] != NULL &&
 				(this->board[i][j]->getLetter() != 'K' && this->board[i][j]->getLetter() != 'k') &&
 				isupper(this->board[i][j]->getLetter()) == isupper(this->board[kx][ky]->getLetter()))
-				for (int x = 0; x < 7; x++)
-					for (int y = 0; y < 7; y++)
+				for (int x = 0; x < 8; x++)
+					for (int y = 0; y < 8; y++)
 						if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
 							Piece* test = this->board[i][j];
 							this->board[x][y] = this->board[i][j];
@@ -418,11 +390,11 @@ bool Chessboard::stalemate() {
 
 	//Ελεγχος εαν υπαρχει οποιαδηποτε διαθεσιμη κινηση
 	if (this->whiteTurn) {
-		for (int i = 0; i < 7; i++)
-			for (int j = 0; j < 7; j++)
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
 				if (this->board[i][j] != NULL && isupper(this->board[i][j]->getLetter()))
-					for (int x = 0; x < 7; x++)
-						for (int y = 0; y < 7; y++)
+					for (int x = 0; x < 8; x++)
+						for (int y = 0; y < 8; y++)
 							if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
 								Piece* test = this->board[x][y];
 								this->board[x][y] = this->board[i][j];
@@ -437,11 +409,11 @@ bool Chessboard::stalemate() {
 		return true;
 	}
 	else
-		for (int i = 0; i < 7; i++)
-			for (int j = 0; j < 7; j++)
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
 				if (this->board[i][j] != NULL && islower(this->board[i][j]->getLetter()))
-					for (int x = 0; x < 7; x++)
-						for (int y = 0; y < 7; y++)
+					for (int x = 0; x < 8; x++)
+						for (int y = 0; y < 8; y++)
 							if (this->board[i][j]->checkMove(x, y) && this->pathCheck(x, y, this->board[i][j])) {
 								Piece* test = this->board[x][y];
 								this->board[x][y] = this->board[i][j];
@@ -488,10 +460,10 @@ void Chessboard::setWhiteTurn(bool whiteTurn) {
 
 void Chessboard::save(string filename) {
 	ofstream file;
-	file.open(filename, ios::binary);
+	file.open(filename.c_str(), ios::binary);
 
-	for (int i = 0; i < 7; i++)
-		for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++)
 			if (this->board[i][j] != NULL)
 				file.write(reinterpret_cast<char*>(&this->board[i][j]), sizeof(this->board[i][j]));
 	file.close();
@@ -500,7 +472,7 @@ void Chessboard::save(string filename) {
 void Chessboard::load(string filename) {
 	ifstream file;
 	Piece* piece;
-	file.open(filename, ios::binary);
+	file.open(filename.c_str(), ios::binary);
 	while (file.read(reinterpret_cast<char*>(&piece), sizeof(piece)))
 		this->board[piece->getPosX()][piece->getPosY()] = piece;
 	file.close();
