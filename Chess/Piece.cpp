@@ -9,7 +9,7 @@ Piece::Piece(bool hasMoved, char letter, int posX, int posY) {
 
 Piece::Piece() {
 	this->hasMoved = false;
-	this->letter = 'p';
+	this->letter = ' ';
 	this->posX = 0;
 	this->posY = 0;
 }
@@ -22,45 +22,48 @@ Piece::Piece(const Piece& copy) {
 }
 
 bool Piece::checkMove(int x, int y) {
-	if (this->letter == 'R' || this->letter == 'r') {
+	cout << x << " " << y << endl;								//DEBUG
+	cout << this->getPosX() << " " << this->getPosY() << endl;	//DEBUG
+	cout << this->getLetter();									//DEBUG
+	if (this->letter == 'R' || this->letter == 'r') {	//πυργος
 		if (x == this->posX || y == this->posY)
 			return true;
 		else
 			return false;
 	}
-	else if (this->letter == 'N' || this->letter == 'n') {
+	else if (this->letter == 'N' || this->letter == 'n') {	//ιππος
 		if ((abs(x - this->posX) == 2 && abs(y - this->posY) == 1) ||
 			(abs(x - this->posX) == 1 && abs(y - this->posY) == 2))
 			return true;
 		else
 			return false;
 	}
-	else if (this->letter == 'B' || this->letter == 'b') {
+	else if (this->letter == 'B' || this->letter == 'b') {	//αξιωματικος
 		if (abs(x - this->posX) == abs(y - this->posY))
 			return true;
 		else
 			return false;
 	}
-	else if (this->letter == 'K' || this->letter == 'k') {
+	else if (this->letter == 'K' || this->letter == 'k') {	//βασιλιας
 		if (abs(x - this->posX) <= 1 && abs(y - this->posX) <= 1)
 			return true;
 		else
 			return false;
 	}
-	else if (this->letter == 'Q' || this->letter == 'q') {
+	else if (this->letter == 'Q' || this->letter == 'q') {	//βασιλισσα
 		if ((x == this->posX || y == this->posY) || (abs(x - this->posX) == abs(y - this->posY)))
 			return true;
 		else
 			return false;
 	}
-	else {
-		if (isupper(this->letter)) {
+	else {									//πιονι
+		if (isupper(this->letter)) {		//λευκο
 			if (!this->hasMoved && this->posX == x && y - this->posY <= 2)
 				return true;
 			else if (abs(this->posX - x) <= 1 && y - this->posY == 1)
 				return true;
 		}
-		else {
+		else {								//μαυρο
 			if (!this->hasMoved && this->posX == x && this->posY - y <= 2)
 				return true;
 			else if (abs(this->posX - x) <= 1 && this->posY - y == 1)

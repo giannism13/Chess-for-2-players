@@ -102,8 +102,9 @@ void UI::play(Chessboard* b) {
 			}
 			else if (move == "replay")	//Επαναληψη κινησεων
 				UI::replay(rounds);
-			else {
+			else {						//ελεγχος και εκτελεση των υπολοιπων κινησεων
 				m = UI::translate(move);
+				cout << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
 					if (b->checkmate()) {
 						cout << "ΜΑΤ! Νίκη Μαύρου!" << endl;
@@ -146,8 +147,8 @@ vector<char> UI::translate(string command) {
 		}
 
 		if (isdigit(command[1]) && isdigit(command[3])) {
-			move[1] = command[1];
-			move[3] = command[3];
+			move[1] = command[1] - 48;
+			move[3] = command[3] - 48;
 		}
 		else {
 			move[1] = 8;

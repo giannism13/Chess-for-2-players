@@ -12,8 +12,8 @@ Chessboard::Chessboard() {
 	this->board[2][0] = new Piece(false, 'B', 2, 0);
 	this->board[5][0] = new Piece(false, 'B', 5, 0);
 
-	this->board[3][0] = new Piece(false, 'Q', 3, 0);
-	this->board[4][0] = new Piece(false, 'K', 4, 0);
+	this->board[3][0] = new Piece(false, 'K', 3, 0);
+	this->board[4][0] = new Piece(false, 'Q', 4, 0);
 
 	for (int i = 0; i < 8; i++)
 		this->board[i][1] = new Piece(false, 'P', i, 1);
@@ -28,8 +28,8 @@ Chessboard::Chessboard() {
 	this->board[2][7] = new Piece(false, 'b', 2, 7);
 	this->board[5][7] = new Piece(false, 'b', 5, 7);
 
-	this->board[3][7] = new Piece(false, 'q', 3, 7);
-	this->board[4][7] = new Piece(false, 'k', 4, 7);
+	this->board[3][7] = new Piece(false, 'k', 3, 7);
+	this->board[4][7] = new Piece(false, 'q', 4, 7);
 
 	for (int i = 0; i < 8; i++)
 		this->board[i][6] = new Piece(false, 'p', i, 6);
@@ -41,6 +41,7 @@ Chessboard::Chessboard() {
 }
 
 bool Chessboard::move(int x, int y, int finX, int finY) {
+	//cout << x << " " << y << " " << finX << " " << finY << endl;	//DEBUG
 	if (this->board[x][y]->checkMove(finX, finY) && this->pathCheck(finX, finY, this->board[x][y])) {
 		//ελεγχος εαν το τετραγωνο προορισμου ειναι κενο ή περιεχει αντιπαλα κοματια
 		if (isupper((this->board[finX][finY]->getLetter())) == isupper(this->board[x][y]->getLetter()) ||
@@ -68,9 +69,9 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 void Chessboard::showBoard() {
 	system("cls");
 	cout << "   +---+---+---+---+---+---+---+---+" << endl;
-	for (int y = 0; y < 8; y++){
+	for (int y = 7; y >= 0; y--){
 		cout << " " << y+1 << " |";
-		for (int x = 0; x < 8; x++) {
+		for (int x = 7; x >= 0; x--) {
 			if (this->board[x][y] != NULL)
 				cout << " " << this->board[x][y]->getLetter() << " |";
 			else
