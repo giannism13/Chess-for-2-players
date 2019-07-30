@@ -40,14 +40,14 @@ Chessboard::Chessboard() {
 			this->board[i][j] = NULL;		
 }
 
-bool Chessboard::move(int x, int y, int finX, int finY) {
-	//cout << x << " " << y << " " << finX << " " << finY << endl;	//DEBUG
-	if (this->board[x][y] == NULL){		//Ελεγχος εαν ο παικτης επελεξε κενο τετραγωνο προς μετακινηση
+bool Chessboard::move(char x, char y, char finX, char finY) {
+	cout << x << " " << y << " " << finX << " " << finY << endl;	//DEBUG
+	if (this->board[x-=0][y-=0] == NULL){		//Ελεγχος εαν ο παικτης επελεξε κενο τετραγωνο προς μετακινηση
 		cout << "false null" << endl;	//DEBUG
 		return false;
 	}
 	
-	if (this->board[x][y]->checkMove(finX, finY) && this->pathCheck(finX, finY, this->board[x][y])) {
+	if (this->board[x-=0][y-=0]->checkMove(finX-=0, finY-=0) && this->pathCheck(finX, finY, this->board[x-=0][y])) {
 		//ελεγχος εαν το τετραγωνο προορισμου ειναι κενο ή περιεχει αντιπαλα κοματια
 		if (isupper((this->board[finX][finY]->getLetter())) == isupper(this->board[x][y]->getLetter()) ||
 			this->board[finX][finY] == NULL) {

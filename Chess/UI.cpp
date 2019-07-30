@@ -58,7 +58,7 @@ void UI::play(Chessboard* b) {
 			else {
 				fflush(stdin);
 				m = UI::translate(move);
-				cout << "Arxiko:" << m.at(0) << m.at(1) << endl << "Teliko:" << m[2] << m[3] << endl;	//DEBUG
+				cout << "Arxiko:" << m[0] << m[1] << endl << "Teliko:" << m[2] << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
 					if (b->checkmate()) {
 						cout << "ΜΑΤ! Νίκη λευκού!" << endl;

@@ -14,7 +14,7 @@ private:
 	bool whiteTurn;			//Ποιος παιζει;
 public:
 	Chessboard();						//default constructor για νεο παιχνιδι
-	bool move(int ,int, int, int);		//μετακινει τα κομματια στη σκακιερα
+	bool move(char, char, char, char);		//μετακινει τα κομματια στη σκακιερα
 	void showBoard();					//εμφανιζει την τρεχουσα κατασταση της σκακιερας
 	bool pathCheck(int, int, Piece*);	//Ελεγχει εαν η διαδρομη ενος κοματιου (πλην ιππου) ειναι ελευθερη
 	bool kingChecked();					//Ελεγχει εαν ο βασιλιας ειναι σε σαχ
