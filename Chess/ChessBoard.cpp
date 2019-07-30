@@ -42,6 +42,11 @@ Chessboard::Chessboard() {
 
 bool Chessboard::move(int x, int y, int finX, int finY) {
 	//cout << x << " " << y << " " << finX << " " << finY << endl;	//DEBUG
+	if (this->board[x][y] == NULL){		//Ελεγχος εαν ο παικτης επελεξε κενο τετραγωνο προς μετακινηση
+		cout << "false null" << endl;	//DEBUG
+		return false;
+	}
+	
 	if (this->board[x][y]->checkMove(finX, finY) && this->pathCheck(finX, finY, this->board[x][y])) {
 		//ελεγχος εαν το τετραγωνο προορισμου ειναι κενο ή περιεχει αντιπαλα κοματια
 		if (isupper((this->board[finX][finY]->getLetter())) == isupper(this->board[x][y]->getLetter()) ||
@@ -53,17 +58,21 @@ bool Chessboard::move(int x, int y, int finX, int finY) {
 			if (this->kingChecked()) {		//Επαναφορα σκακιερας σε περιπτωση σαχ
 				this->board[x][y] = this->board[finX][finY];
 				this->board[finX][finY] = test;
+				cout << "false check" << endl;	//DEBUG
 				return false;
 			}
 
 			this->board[finX][finY]->setPosX(finX);
 			this->board[finX][finY]->setPosY(finY);
 			this->board[finX][finY]->setHasMoved(true);
+			cout << "move ok" << endl;
 			return true;
 		}
 	}
-	else
+	else{
+		cout << "move failed" << endl;
 		return false;
+	}
 }
 
 void Chessboard::showBoard() {
@@ -81,22 +90,31 @@ void Chessboard::showBoard() {
 		cout << "   +---+---+---+---+---+---+---+---+" << endl;
 	}
 	cout << "     A   B   C   D   E   F   G   H " << endl;
+	cin.clear();
 	fflush(stdin);
 }
 
 bool Chessboard::pathCheck(int x, int y, Piece* p) {
 	//Ειδικοι κανονες για πιονια
 	if (p->getLetter() == 'P') {
-		if (p->getPosX() == x && this->board[x][y] == NULL)
+		if (p->getPosX() == x && this->board[x][y] == NULL){
+			//cout << "reeee1" << endl;		//DEBUG
 			return true;
+		}
 		else if (x == p->getPosX() + 1 && y == p->getPosY() + 1 && this->board[p->getPosX() + 1][p->getPosY() + 1] != NULL &&
-			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter()))
+			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter())){
+			//cout << "reeee2" << endl;		//DEBUG
 			return true;
+		}
 		else if (x == p->getPosX() - 1 && y == p->getPosY() + 1 && this->board[p->getPosX() - 1][p->getPosY() + 1] != NULL &&
-			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter()))
+			islower(this->board[p->getPosX() + 1][p->getPosY() + 1]->getLetter())){
+			//cout << "reeee3" << endl;		//DEBUG
 			return true;
-		else
+		}
+		else{
+			//cout << "reeee false" << endl;	//DEBUG
 			return false;
+		}
 	}
 	else if (p->getLetter() == 'p') {
 		if (p->getPosX() == x && this->board[x][y] == NULL)

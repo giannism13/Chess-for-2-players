@@ -22,9 +22,11 @@ Piece::Piece(const Piece& copy) {
 }
 
 bool Piece::checkMove(int x, int y) {
-	cout << x << " " << y << endl;								//DEBUG
-	cout << this->getPosX() << " " << this->getPosY() << endl;	//DEBUG
-	cout << this->getLetter();									//DEBUG
+	//cout << x << " " << y << endl;								//DEBUG
+	//cout << "here1" << endl;										//DEBUG
+	//cout << this->getPosX() << " " << this->getPosY() << endl;	//DEBUG
+	//cout << "here" << endl;										//DEBUG
+	//cout << this->getLetter();									//DEBUG
 	if (this->letter == 'R' || this->letter == 'r') {	//πυργος
 		if (x == this->posX || y == this->posY)
 			return true;
@@ -58,10 +60,13 @@ bool Piece::checkMove(int x, int y) {
 	}
 	else {									//πιονι
 		if (isupper(this->letter)) {		//λευκο
-			if (!this->hasMoved && this->posX == x && y - this->posY <= 2)
+			cout << "pioni" << endl;		//DEBUG
+			if (!this->hasMoved && this->posX == x && y - this->posY <= 2){			
 				return true;
-			else if (abs(this->posX - x) <= 1 && y - this->posY == 1)
-				return true;
+			}
+			else if (abs(this->posX - x) <= 1 && y - this->posY == 1){			
+				return true;				//DEBUG
+			}
 		}
 		else {								//μαυρο
 			if (!this->hasMoved && this->posX == x && this->posY - y <= 2)
@@ -69,6 +74,8 @@ bool Piece::checkMove(int x, int y) {
 			else if (abs(this->posX - x) <= 1 && this->posY - y == 1)
 				return true;
 		}
+		cout << "false" << endl;			//DEBUG
+		return false;
 	}
 }
 

@@ -56,7 +56,9 @@ void UI::play(Chessboard* b) {
 			else if (move == "replay")	//Επαναληψη κινησεων
 				UI::replay(rounds);
 			else {
+				fflush(stdin);
 				m = UI::translate(move);
+				cout << "Arxiko:" << m.at(0) << m.at(1) << endl << "Teliko:" << m[2] << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
 					if (b->checkmate()) {
 						cout << "ΜΑΤ! Νίκη λευκού!" << endl;
@@ -104,7 +106,10 @@ void UI::play(Chessboard* b) {
 				UI::replay(rounds);
 			else {						//ελεγχος και εκτελεση των υπολοιπων κινησεων
 				m = UI::translate(move);
-				cout << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << endl;	//DEBUG
+							
+				for (std::vector<char>::const_iterator i = m.begin(); i != m.end(); ++i)
+					std::cout << *i << ' ';				
+					//cout << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
 					if (b->checkmate()) {
 						cout << "ΜΑΤ! Νίκη Μαύρου!" << endl;
@@ -129,26 +134,26 @@ void UI::play(Chessboard* b) {
 
 vector<char> UI::translate(string command) {
 	vector<char> move;
-	move.assign(4,0);
+	move.assign(4, 0);
 	if (command.size() == 4) {
 		if (isalpha(command[0]) && isalpha(command[2])) {
 			if (isupper(command[0])) {
-				move[0] = command[0] - 65;
-				move[2] = command[2] - 65;
+				move[0] = command[0] - 17;		//μετατροπη του γραμματος σε αριθμο 				
+				move[2] = command[2] - 17;
 			}
 			else {
-				move[0] = command[0] - 97;
-				move[2] = command[2] - 97;
+				move[0] = command[0] - 49;				
+				move[2] = command[2] - 49;
 			}
 		}
-		else {	//ωστε να βγει ακυρη η κινηση απο την chechMove
+		else {									//ωστε να βγει ακυρη η κινηση απο την checkMove
 			move[0] = 8;
 			move[2] = 8;
 		}
 
 		if (isdigit(command[1]) && isdigit(command[3])) {
-			move[1] = command[1] - 48;
-			move[3] = command[3] - 48;
+			move[1] = command[1] - 1;
+			move[3] = command[3] - 1;
 		}
 		else {
 			move[1] = 8;
@@ -166,7 +171,7 @@ vector<char> UI::translate(string command) {
 			move[3] = 8;
 			move[4] = 8;
 		}
-	else if (command.size() == 5)
+	else if (command.size() == 5){
 		if (command == "0-0-0")
 			move[4] = 2; //μεγαλο ροκε
 		else {
@@ -176,6 +181,7 @@ vector<char> UI::translate(string command) {
 			move[3] = 8;
 			move[4] = 8;
 		}
+	}
 	return move;
 }
 
