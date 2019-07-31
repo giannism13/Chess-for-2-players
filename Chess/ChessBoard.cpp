@@ -44,12 +44,16 @@ bool Chessboard::move(char x, char y, char finX, char finY) {
 	int iy = y - '0';
 	int ifinX = finX - '0';
 	int ifinY = finY - '0';
-	cout << ix << " " << iy << " " << ifinX << " " << ifinY << endl;	//DEBUG
-	//cout << this->board[ix][iy]->getLetter() << "_" << this->board[ix][iy]->getPosX() << "_" << this->board[ix][iy]->getPosY() << endl;	//DEBUG
 	if (this->board[ix][iy]->getLetter() == 'e'){		//Ελεγχος εαν ο παικτης επελεξε κενο τετραγωνο προς μετακινηση
 		cout << "false null" << endl;	//DEBUG
 		return false;
 	}
+	
+	//Ελεγχος εαν ο παικτης επελεξε κοματι του αντιπαλου προς μετακινηση
+	if (this->getWhiteTurn() && islower(this->board[ix][iy]->getLetter()))
+		return false;
+	else if (!this->getWhiteTurn() && isupper(this->board[ix][iy]->getLetter()))
+		return false;
 	
 	if (this->board[ix][iy]->checkMove(ifinX, ifinY) && this->pathCheck(ifinX, ifinY, this->board[ix][iy])) {
 		cout << "check ok!" << endl;	//DEBUG

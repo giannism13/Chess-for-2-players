@@ -139,12 +139,12 @@ vector<char> UI::translate(string command) {
 	if (command.size() == 4) {
 		if (isalpha(command[0]) && isalpha(command[2])) {
 			if (isupper(command[0])) {
-				move[0] = command[0] - 17;		//μετατροπη του γραμματος σε αριθμο 				
-				move[2] = command[2] - 17;
+				move[0] = command[0] - 18;		//μετατροπη του γραμματος σε αριθμο 				
+				move[2] = command[2] - 18;
 			}
 			else {
-				move[0] = command[0] - 49;				
-				move[2] = command[2] - 49;
+				move[0] = command[0] - 50;				
+				move[2] = command[2] - 50;
 			}
 		}
 		else {									//ωστε να βγει ακυρη η κινηση απο την checkMove
