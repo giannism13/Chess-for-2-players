@@ -9,9 +9,9 @@ Piece::Piece(bool hasMoved, char letter, int posX, int posY) {
 
 Piece::Piece() {
 	this->hasMoved = false;
-	this->letter = ' ';
-	this->posX = 0;
-	this->posY = 0;
+	this->letter = 'e';
+	this->posX = -1;
+	this->posY = -1;
 }
 
 Piece::Piece(const Piece& copy) {
@@ -61,11 +61,13 @@ bool Piece::checkMove(int x, int y) {
 	else {									//πιονι
 		if (isupper(this->letter)) {		//λευκο
 			cout << "pioni" << endl;		//DEBUG
-			if (!this->hasMoved && this->posX == x && y - this->posY <= 2){			
+			if (!this->hasMoved && this->posX == x && y - this->posY <= 2){
+				cout << "move ok 1" << endl;	//DEBUG
 				return true;
 			}
-			else if (abs(this->posX - x) <= 1 && y - this->posY == 1){			
-				return true;				//DEBUG
+			else if (abs(this->posX - x) <= 1 && y - this->posY == 1){
+				cout << "move ok 2" << endl;	//DEBUG
+				return true;
 			}
 		}
 		else {								//μαυρο
