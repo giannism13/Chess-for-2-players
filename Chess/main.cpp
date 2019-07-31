@@ -1,5 +1,5 @@
 #include "UI.h"
-#include <unistd.h>
+//#include <unistd.h>
 using namespace std;
 int main() {
 	system("chcp 1253");
@@ -16,12 +16,11 @@ int main() {
 			exit(0);
 		default:
 			cout << "Λάθος επιλογή! Παρακαλώ ξαναπροσπαθήστε!" << endl;
-			sleep(2);
+			//sleep(2);
 			cin.clear();
 			fflush(stdin);			
 			break;
 		}
-	}
-	while (true);
+	}while (true);
 	return 0;
 }
