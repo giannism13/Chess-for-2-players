@@ -21,10 +21,7 @@ Piece::Piece(const Piece& copy) {
 	this->letter = copy.letter;
 }
 
-int mi = 0;	//DEBUG
 bool Piece::checkMove(int x, int y) {
-	cout << "checkmove: " << mi << endl << endl;
-	cout << this->letter << endl;	//DEBUG
 	if ((x > 7 || y > 7) && (x < 0 || y < 0))	//Ελεγχος εαν το τετραγωνο προορισμου ειναι ανυπαρκτο
 		return false;
 	
@@ -48,13 +45,10 @@ bool Piece::checkMove(int x, int y) {
 			return false;
 	}
 	else if (this->letter == 'K' || this->letter == 'k') {	//βασιλιας
-		cout << abs(x - this->posX) << "-" <<  abs(y - this->posY) << endl;	//DEBUG
 		if (abs(x - this->posX) <= 1 && abs(y - this->posY) <= 1){
-			cout << "checkmove ok" << endl;		//DEBUG
 			return true;
 		}
 		else{
-			cout << "checkmove failed" << endl;	//DEBUG
 			return false;
 		}
 	}
@@ -66,13 +60,10 @@ bool Piece::checkMove(int x, int y) {
 	}
 	else if (this->letter == 'P' || this->letter == 'p'){	//πιονι
 		if (isupper(this->letter)) {		//λευκο
-			cout << "pioni" << endl;		//DEBUG
 			if (!this->hasMoved && this->posX == x && y - this->posY <= 2){
-				cout << "move ok 1" << endl;	//DEBUG
 				return true;
 			}
 			else if (abs(this->posX - x) <= 1 && y - this->posY == 1){
-				cout << "move ok 2" << endl;	//DEBUG
 				return true;
 			}
 		}
@@ -82,7 +73,6 @@ bool Piece::checkMove(int x, int y) {
 			else if (abs(this->posX - x) <= 1 && this->posY - y == 1)
 				return true;
 		}
-		cout << "checkmove false" << endl;			//DEBUG
 		return false;
 	}
 }

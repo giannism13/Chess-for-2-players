@@ -60,9 +60,7 @@ void UI::play(Chessboard* b) {
 			else {
 				fflush(stdin);
 				m = UI::translate(move);
-				cout << "Arxiko:" << m[0] << " " << m[1] << endl << "Teliko:" << m[2] << " " << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
-					cout << "ok?" << endl;	//DEBUG
 					if (b->checkmate()) {
 						cout << "ÌÁÔ! Íßêç ëåõêïý!" << endl;
 						system("pause");
@@ -114,7 +112,6 @@ void UI::play(Chessboard* b) {
 							
 				for (std::vector<char>::const_iterator i = m.begin(); i != m.end(); ++i)
 					std::cout << *i << ' ';				
-					//cout << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << endl;	//DEBUG
 				if (b->move(m[0], m[1], m[2], m[3])) {
 					if (b->checkmate()) {
 						cout << "ÌÁÔ! Íßêç Ìáýñïõ!" << endl;
@@ -204,7 +201,6 @@ void UI::loadGame() {
 	
 	getline(cin, name);
 	Chessboard b;
-	cout << "load called" << endl;	//DEBUG
 	b.load(name);
 	UI::play(&b);
 }
