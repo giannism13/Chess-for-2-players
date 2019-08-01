@@ -21,12 +21,13 @@ Piece::Piece(const Piece& copy) {
 	this->letter = copy.letter;
 }
 
+int mi = 0;	//DEBUG
 bool Piece::checkMove(int x, int y) {
-	//cout << x << " " << y << endl;								//DEBUG
-	//cout << "here1" << endl;										//DEBUG
-	//cout << this->getPosX() << " " << this->getPosY() << endl;	//DEBUG
-	//cout << "here" << endl;										//DEBUG
-	//cout << this->getLetter();									//DEBUG
+	cout << "checkmove: " << mi << endl << endl;
+	cout << this->letter << endl;	//DEBUG
+	if ((x > 7 || y > 7) && (x < 0 || y < 0))	//Ελεγχος εαν το τετραγωνο προορισμου ειναι ανυπαρκτο
+		return false;
+	
 	if (this->letter == 'R' || this->letter == 'r') {	//πυργος
 		if (x == this->posX || y == this->posY)
 			return true;
@@ -47,10 +48,15 @@ bool Piece::checkMove(int x, int y) {
 			return false;
 	}
 	else if (this->letter == 'K' || this->letter == 'k') {	//βασιλιας
-		if (abs(x - this->posX) <= 1 && abs(y - this->posX) <= 1)
+		cout << abs(x - this->posX) << "-" <<  abs(y - this->posY) << endl;	//DEBUG
+		if (abs(x - this->posX) <= 1 && abs(y - this->posY) <= 1){
+			cout << "checkmove ok" << endl;		//DEBUG
 			return true;
-		else
+		}
+		else{
+			cout << "checkmove failed" << endl;	//DEBUG
 			return false;
+		}
 	}
 	else if (this->letter == 'Q' || this->letter == 'q') {	//βασιλισσα
 		if ((x == this->posX || y == this->posY) || (abs(x - this->posX) == abs(y - this->posY)))
@@ -58,7 +64,7 @@ bool Piece::checkMove(int x, int y) {
 		else
 			return false;
 	}
-	else {									//πιονι
+	else if (this->letter == 'P' || this->letter == 'p'){	//πιονι
 		if (isupper(this->letter)) {		//λευκο
 			cout << "pioni" << endl;		//DEBUG
 			if (!this->hasMoved && this->posX == x && y - this->posY <= 2){
@@ -76,7 +82,7 @@ bool Piece::checkMove(int x, int y) {
 			else if (abs(this->posX - x) <= 1 && this->posY - y == 1)
 				return true;
 		}
-		cout << "false" << endl;			//DEBUG
+		cout << "checkmove false" << endl;			//DEBUG
 		return false;
 	}
 }

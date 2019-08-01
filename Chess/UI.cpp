@@ -28,6 +28,8 @@ void UI::play(Chessboard* b) {
 	while (true) {
 		b->showBoard();
 		do {
+			cin.clear();
+			fflush(stdin);
 			cout << endl << "Κίνηση Λευκού: ";
 			getline(cin, move);
 			if (move == "0-0") {		//Μικρο ροκε
@@ -81,6 +83,8 @@ void UI::play(Chessboard* b) {
 
 		b->showBoard();
 		do {
+			cin.clear();
+			fflush(stdin);
 			cout << endl << "Κίνηση Μαύρου: ";
 			getline(cin, move);
 			if (move == "0-0") {		//Μικρο ροκε
@@ -195,10 +199,12 @@ string UI::saveUI() {
 
 void UI::loadGame() {
 	string name;
-	Chessboard b;
-
+	fflush(stdin);
 	cout << "Δώστε το όνομα του αρχείου: ";
+	
 	getline(cin, name);
+	Chessboard b;
+	cout << "load called" << endl;	//DEBUG
 	b.load(name);
 	UI::play(&b);
 }
